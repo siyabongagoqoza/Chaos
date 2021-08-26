@@ -12,3 +12,4 @@ Dependancies
   - selenium
   - date time 
   - randfacts
+  - wikipedia
