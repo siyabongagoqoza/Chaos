@@ -13,3 +13,4 @@ Dependancies
   - date time 
   - randfacts
   - wikipedia
+  - speedtest-cli
