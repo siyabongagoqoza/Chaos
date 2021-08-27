@@ -15,5 +15,9 @@ class infow():
         enter.click()
 
     def summarize(self, query):
-        print(wikipedia.summary(query, sentences=2))
+        results = wikipedia.summary(query, sentences=2)
+        print(results)
+        return results
+
+
 

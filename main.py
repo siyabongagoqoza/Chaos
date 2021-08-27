@@ -1,21 +1,40 @@
 import pyttsx3 as p
-import speech_recognition as    sr
+import speech_recognition as sr
 import randfacts
 import datetime
 import googlesearch
 import webbrowser
+import speedtest
 
 
+from netflix import *
 from News import *
 from YT_auto import *
 from randomJoke import *
 from selenium_web import *
 from weather import *
 
+# registering text to speech module
 engine = p.init()
 rate = engine.getProperty('rate')
-engine.setProperty('rate', 150)
+engine.setProperty('rate', 130)
 voice = engine.getProperty('voice')
+
+st = speedtest.Speedtest()
+
+
+def writeNote(words):
+
+    fwrite = open("notes.txt", "w")
+    fwrite.write(words)
+    fwrite.close()
+
+
+def readNote():
+
+    fread = open("notes.txt", "r")
+    contents = fread.read()
+    return contents
 
 
 def speak(text):
@@ -72,13 +91,15 @@ def listen():
                         print(topic)
                     except:
                         speak("couldn\'t quite catch that")
+                        continue
 
                 speak("searching {} in wikipedia".format(topic))
                 print("searching {} in wikipedia".format(topic))
                 assist = infow()
                 assist.get_info(topic)
+                speak(assist.summarize(topic))
                 text2 = ""
-                continue
+                break
 
             elif "search" in text2:
                 print("what would you like to search?")
@@ -92,6 +113,7 @@ def listen():
                         query = r.recognize_google(audio)
                         print(query)
                     except:
+                        speak("couldn\'t quite catch that")
                         continue
                 for j in googlesearch.search(query, tld='com', lang='en', num=1, stop=1, pause=2.0):
                     print(j)
@@ -172,6 +194,42 @@ def listen():
                 webbrowser.open('https://www.youtube.com/watch?v=wLoWd2KyUro&list=PLR5Cmjo90BNguiSb2wDShPdKoa-Xiw5x1')
                 text2 = ""
                 break
+            elif "download speed" in text2:
+                print("Sir the download speed is " + str(st.download()))
+                speak("Sir the download speed is " + str(st.download()))
+                text2 = ""
+                continue
+            elif "upload speed" in text2:
+                print("Sir the upload speed is " + str(st.upload()))
+                speak("Sir the upload speed is " + str(st.upload()))
+                text2 = ""
+                continue
+            elif "write" in text2:
+                print("what should I write?")
+                speak("what should I write?")
+                with sr.Microphone() as source:
+                    r.energy_threshold = 10000
+                    r.adjust_for_ambient_noise(source, 1.2)
+                    print("listening")
+                    audio = r.listen(source)
+                    try:
+                        text2 = r.recognize_google(audio)
+                        print(text)
+                    except:
+                        speak("couldn\'t catch that sir")
+                        continue
+                speak("okay, I am done")
+                writeNote(text2)
+                text2 = ""
+                continue
+            elif "netflix" in text2:
+                print("got it")
+                speak("got it")
+                assist = movies()
+                assist.wNetflix()
+                text2 = ""
+                break
+
             elif "thanks" in text2:
                 print("Happy to help")
                 speak("Happy to help")
@@ -201,3 +259,12 @@ while True:
         speak("Yes sir?")
         listen()
         text = ""
+
+    if "sleep" in text:
+
+        print("Sir do not forget " + readNote())
+        speak("Sir do not forget " + readNote())
+        print("Okay shutting down")
+        speak("Okay shutting down")
+
+        break
