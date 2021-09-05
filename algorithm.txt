@@ -1,0 +1,12 @@
+starts listening
+
+main loop
+
+	if jarvis then 
+		say Yes sir
+
+		start sub loop for listening
+		
+			if 10seconds pass without say
+				go back to main loop (try using break)
+					

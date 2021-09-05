@@ -3,7 +3,7 @@ import wikipedia
 
 class infow():
     def __init__(self):
-        self.driver = webdriver.Chrome(executable_path='C:\\Users\\Siyabonga Goqoza\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
+        self.driver = webdriver.Chrome(executable_path='C:\\Users\\Cash\\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
 
     def get_info(self, query):
         self.query = query

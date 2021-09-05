@@ -9,6 +9,7 @@ reminder = ["Sir don't forget to",
 
 occuringReminder = ["Sir don't forget to",
                     "Remember to"]
+
 playSickBeats = ["get ready to rock and roll",
                  "playing sick beats",
                  "okay time to rock",
@@ -19,13 +20,11 @@ playChillMusic = ["playing lo-fi music",
                   "Here\'s something to help you chill",
                   "playing relaxing music"]
 
-playOnYoutube2 = ["Playing a video on youtube about",
-                  "searching",
-                  "watching"]
+playOnYoutube2 = ["playing {}"]
 
 playOnYoutube1 = ["what should I search?",
                   "what do you want me to play?",
-                  "watching"]
+                 ]
 
 writeSpeak = ["what should I write?",
               "what should I take note of sir?",

@@ -69,7 +69,7 @@ def listen():
         try:
             with sr.Microphone() as source:
                 r.energy_threshold = 10000
-                r.adjust_for_ambient_noise(source, 1.2)
+                r.adjust_for_ambient_noise(source)
                 print("listening")
                 audio = r.listen(source)
                 try:
@@ -83,7 +83,7 @@ def listen():
 
                 with sr.Microphone() as source:
                     r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source, 1.2)
+                    r.adjust_for_ambient_noise(source)
                     print("listening")
                     audio = r.listen(source)
                     try:
@@ -104,7 +104,7 @@ def listen():
                 speak("what would you like to search?")
                 with sr.Microphone() as source:
                     r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source, 1.2)
+                    r.adjust_for_ambient_noise(source)
                     print("listening")
                     audio = r.listen(source)
                     try:
@@ -119,7 +119,7 @@ def listen():
                 text2 = ""
                 continue
 
-            elif "play" and "video" in text2:
+            elif "YouTube" in text2:
                 speak(random.choice(playOnYoutube1))
                 text2 = ""
                 with sr.Microphone() as source:
@@ -133,7 +133,7 @@ def listen():
                     except:
                         speak("couldn\'t quite catch that")
                         continue
-                    speak((random.choice(playOnYoutube2)).format(text2))
+                    speak(random.choice(playOnYoutube2).format(text2))
                     assist = music()
                     assist.play(text2)
                     text2 = ""
@@ -179,16 +179,13 @@ def listen():
                 continue
             elif "sick beats" in text2:
                 speak(random.choice(playSickBeats))
-                assist = music()
-                assist.play("ac/dc playlist")
+                webbrowser.open("https://www.youtube.com/watch?v=wLoWd2KyUro&list=PLR5Cmjo90BNguiSb2wDShPdKoa-Xiw5x1")
                 text2 = ""
                 break
             elif "chill music" in text2:
                 speak(random.choice(playChillMusic))
-                assist = music()
-                assist.play("lofi")
+                webbrowser.open("https://www.youtube.com/watch?v=NxSDNogkKX0")
                 text2 = ""
-                break
             elif "download speed" in text2:
                 speak("Sir the download speed is " + str(st.download()))
                 text2 = ""
@@ -201,7 +198,7 @@ def listen():
                 speak("what should I write?")
                 with sr.Microphone() as source:
                     r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source, 1.2)
+                    r.adjust_for_ambient_noise(source)
                     print("listening")
                     audio = r.listen(source)
                     try:
@@ -239,7 +236,7 @@ text = ""
 while True:
     with sr.Microphone() as source:
         r.energy_threshold = 10000
-        r.adjust_for_ambient_noise(source, 1.2)
+        r.adjust_for_ambient_noise(source)
         print("listening")
         audio = r.listen(source)
         try:
