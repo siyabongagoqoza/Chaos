@@ -14,3 +14,4 @@ Dependancies
   - randfacts
   - wikipedia
   - speedtest-cli
+  - opencv-python
