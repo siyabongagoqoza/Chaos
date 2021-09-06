@@ -1,9 +1,13 @@
 from selenium import webdriver
+
 import wikipedia
+import getpass
 
 class infow():
     def __init__(self):
-        self.driver = webdriver.Chrome(executable_path='C:\\Users\\Cash\\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
+        userAccount = getpass.getuser()
+        print(userAccount)
+        self.driver = webdriver.Chrome(executable_path='C:\\Users\\' + userAccount + '\\PycharmProjects\\Chaos\\chromedriver\\chromedriver.exe')
 
     def get_info(self, query):
         self.query = query

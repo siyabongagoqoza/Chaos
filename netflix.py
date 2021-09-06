@@ -1,9 +1,13 @@
+import getpass
+
 from selenium import webdriver
 
 
 class movies():
     def __init__(self):
-        self.driver = webdriver.Chrome(executable_path='C:\\Users\\Siyabonga Goqoza\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
+        userAccount = getpass.getuser()
+        print(userAccount)
+        self.driver = webdriver.Chrome(executable_path='C:\\Users\\'+userAccount+'\\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
 
     def wNetflix(self):
         self.driver.get(url="https://www.netflix.com/za/login")

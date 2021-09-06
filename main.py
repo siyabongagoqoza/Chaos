@@ -60,7 +60,8 @@ if 12 <= dayTime24 <= 17:
 if 18 <= dayTime24 <= 23:
     speak("Good evening sir, how can I help?")
 
-
+userAccount = getpass.getuser()
+print(userAccount)
 # listens for commands
 def listen():
     text2 = ""
@@ -124,7 +125,7 @@ def listen():
                 text2 = ""
                 with sr.Microphone() as source:
                     r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source, 1.2)
+                    r.adjust_for_ambient_noise(source)
                     print("listening")
                     audio = r.listen(source)
                     try:
@@ -187,11 +188,11 @@ def listen():
                 webbrowser.open("https://www.youtube.com/watch?v=NxSDNogkKX0")
                 text2 = ""
             elif "download speed" in text2:
-                speak("Sir the download speed is " + str(st.download()))
+                speak("Sir the download speed is " + str(int(st.download())))
                 text2 = ""
                 continue
             elif "upload speed" in text2:
-                speak("Sir the upload speed is " + str(st.upload()))
+                speak("Sir the upload speed is " + str(int(st.upload())))
                 text2 = ""
                 continue
             elif "write" in text2:
@@ -224,8 +225,10 @@ def listen():
                 speak("Happy to help")
                 text2 = ""
                 break
-            elif "steam" in text2:
-                os.system("C:/Program\ Files\ (x86)/Steam/steam.exe")
+            elif "Steam" in text2:
+                os.startfile("C:\Program Files (x86)\Steam\steam.exe")
+                text2 = ""
+                break
 
         except KeyboardInterrupt:
             break

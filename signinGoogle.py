@@ -1,12 +1,17 @@
+import getpass
+
 from selenium import webdriver
 
 
 class google_sign_in():
     def __init__(self):
-        self.driver = webdriver.Chrome(executable_path='C:\\Users\\Cash\\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
+        userAccount = getpass.getuser()
+        self.driver = webdriver.Chrome(executable_path='C:\\Users\\'+userAccount+'\\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
 
     def sign_in(self):
-        self.driver.get(url="https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/&ec=GAZAmgQ")
+        self.driver.get(url="https://stackoverflow.com/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2f")
+        stack_login_in = self.driver.find_element_by_xpath('//*[@id="openid-buttons"]/button[1]')
+        stack_login_in.click()
         username = self.driver.find_element_by_xpath('//*[@id="identifierId"]')
         username.click()
         username.send_keys('siyabongagoqoza@gmail.com')
