@@ -15,3 +15,4 @@ Dependancies
   - wikipedia
   - speedtest-cli
   - opencv-python
+  - mediapipe
