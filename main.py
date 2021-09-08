@@ -229,6 +229,10 @@ def listen():
                 os.startfile("C:\Program Files (x86)\Steam\steam.exe")
                 text2 = ""
                 break
+            elif "volume" in text2:
+                os.startfile("C:/Users/Siyabonga Goqoza/PycharmProjects/CHAOS/volumeHandControl.py")
+                text2 = ""
+                continue
 
         except KeyboardInterrupt:
             break
