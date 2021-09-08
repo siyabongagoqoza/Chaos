@@ -17,3 +17,4 @@ Dependancies
   - numpy
   - mediapipe
   - opencv-python
+  - pycaw
