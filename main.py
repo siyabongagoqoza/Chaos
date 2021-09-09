@@ -7,6 +7,7 @@ import datetime
 import googlesearch
 import webbrowser
 import speedtest
+import time
 
 from speechLibrary import *
 from netflix import *
@@ -24,6 +25,8 @@ voices = engine.getProperty('voices')
 
 st = speedtest.Speedtest()
 
+userAccount = getpass.getuser()
+print(userAccount)
 
 def writeNote(words):
 
@@ -62,6 +65,8 @@ if 18 <= dayTime24 <= 23:
 
 userAccount = getpass.getuser()
 print(userAccount)
+
+
 # listens for commands
 def listen():
     text2 = ""
@@ -230,7 +235,9 @@ def listen():
                 text2 = ""
                 break
             elif "volume" in text2:
-                os.startfile("C:/Users/Siyabonga Goqoza/PycharmProjects/CHAOS/volumeHandControl.py")
+
+                print("changing the volume sir")
+                import volumeHandControl
                 text2 = ""
                 continue
 
@@ -261,5 +268,5 @@ while True:
         if not(readNote() == ""):
             speak(random.choice(reminder) + " " + readNote())
         speak("Okay shutting down")
-
         break
+

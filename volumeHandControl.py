@@ -8,6 +8,7 @@ from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
+
 ####################
 wCam, hCam = 648, 488
 ####################
@@ -28,6 +29,7 @@ volume = cast(interface, POINTER(IAudioEndpointVolume))
 volRange = volume.GetVolumeRange()
 minVol = volRange[0]
 maxVol = volRange[1]
+timeout = time.time() + 10  # 5 minutes from now
 
 while True:
     success, img = cap.read()
@@ -65,3 +67,9 @@ while True:
 
     cv2.imshow("Img", img)
     cv2.waitKey(1)
+
+    test = 0
+    if test == 5 or time.time() > timeout:
+        break
+    test = test - 1
+
