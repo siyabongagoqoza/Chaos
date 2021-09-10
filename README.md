@@ -14,3 +14,7 @@ Dependancies
   - randfacts
   - wikipedia
   - speedtest-cli
+  - pyautogui
+  - opencv-python
+  - mediapipe
+  
