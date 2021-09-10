@@ -225,7 +225,8 @@ def listen():
                 break
             elif "who are you" in text2:
                 speak(random.choice(introduction))
-
+                text2 = ""
+                continue
             elif "thanks" in text2:
                 speak("Happy to help")
                 text2 = ""
@@ -238,6 +239,12 @@ def listen():
 
                 print("changing the volume sir")
                 import volumeHandControl
+                text2 = ""
+                continue
+            elif "virtual" in text2:
+
+                print("going to virtual mode")
+                import VirtualMouse
                 text2 = ""
                 continue
 
