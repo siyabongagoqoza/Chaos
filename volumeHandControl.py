@@ -13,7 +13,7 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 wCam, hCam = 648, 488
 ####################
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 cap.set(3, wCam)
 cap.set(4, hCam)
 pTime = 0
@@ -33,7 +33,10 @@ timeout = time.time() + 10  # 5 minutes from now
 
 while True:
     success, img = cap.read()
-    img = detector.findHands(img)
+    try:
+        img = detector.findHands(img)
+    except:
+        continue
     lmList = detector.findPosition(img, draw=False)
     if len(lmList) != 0:
         #print(lmList[4], lmList[8])
