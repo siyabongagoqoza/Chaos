@@ -68,9 +68,11 @@ while True:
     pTime = cTime
     cv2.putText(img, f'FPS: {(int(fps))}', (40, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
 
-    cv2.imshow("Img", img)
-    cv2.waitKey(1)
+    # Display
+    # cv2.imshow("Img", img)
+    # cv2.waitKey(1)
 
+    # timer for volume change
     test = 0
     if test == 5 or time.time() > timeout:
         break

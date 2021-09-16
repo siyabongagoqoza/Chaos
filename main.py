@@ -28,6 +28,7 @@ st = speedtest.Speedtest()
 userAccount = getpass.getuser()
 print(userAccount)
 
+
 def writeNote(words):
 
     fwrite = open("notes.txt", "w")
@@ -40,6 +41,12 @@ def readNote():
     fread = open("notes.txt", "r")
     contents = fread.read()
     return contents
+
+
+def addToNote(words):
+    fadd = open("notes.txt", "a")
+    fadd.append(words)
+    fadd.close()
 
 
 def speak(text):
@@ -180,7 +187,7 @@ def listen():
                 text2 = ""
                 continue
             elif "weather" in text2:
-                speak("the temperature in pretoria is " + str(temp()) + " degrees celsius, with " + des() + "...")
+                speak(description)
                 text2 = ""
                 continue
             elif "sick beats" in text2:
