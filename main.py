@@ -92,44 +92,41 @@ def listen():
                     continue
 
             if "information" in text2:
-                speak("what would you like to know")
+                infoSrch = text2.split()
+                indexW = infoSrch.index("about")
+                sIndex = indexW + 1
+                try:
+                    searchW = infoSrch[sIndex] + " " + infoSrch[sIndex+1]
+                    print(searchW)
+                except:
+                    searchW = infoSrch[sIndex]
+                    print(searchW)
 
-                with sr.Microphone() as source:
-                    r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source)
-                    print("listening")
-                    audio = r.listen(source)
-                    try:
-                        topic = r.recognize_google(audio)
-                        print(topic)
-                    except:
-                        speak("couldn\'t quite catch that")
-                        continue
+                #speak("Got it Sir, here's what I know about {}".format(searchW))
+                speak("Got it Sir, here's what I know")
 
-                speak("searching {} in wikipedia".format(topic))
                 assist = infow()
-                assist.get_info(topic)
-                speak(assist.summarize(topic))
+                assist.get_info(searchW)
+                speak(assist.summarize(searchW))
                 text2 = ""
+                searchW = ""
                 break
 
             elif "search" in text2:
-                speak("what would you like to search?")
-                with sr.Microphone() as source:
-                    r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source)
-                    print("listening")
-                    audio = r.listen(source)
-                    try:
-                        query = r.recognize_google(audio)
-                        print(query)
-                    except:
-                        speak("couldn\'t quite catch that")
-                        continue
-                for j in googlesearch.search(query, tld='com', lang='en', num=1, stop=1, pause=2.0):
+                infoSrch = text2.split()
+                indexW = infoSrch.index("search")
+                sIndex = indexW + 1
+                searchW = infoSrch[sIndex]
+                print(searchW)
+
+                speak("Got it")
+
+                for j in googlesearch.search(searchW, tld='com', lang='en', num=1, stop=1, pause=2.0):
                     print(j)
                     webbrowser.open(j)
+
                 text2 = ""
+                searchW = ""
                 continue
 
             elif "YouTube" in text2:
@@ -199,6 +196,7 @@ def listen():
                 speak(random.choice(playChillMusic))
                 webbrowser.open("https://www.youtube.com/watch?v=NxSDNogkKX0")
                 text2 = ""
+                break
             elif "download speed" in text2:
                 speak("Sir the download speed is " + str(int(st.download())))
                 text2 = ""
@@ -242,13 +240,17 @@ def listen():
                 os.startfile("C:\Program Files (x86)\Steam\steam.exe")
                 text2 = ""
                 break
+            elif "Minecraft" in text2:
+                os.startfile("C:\Program Files (x86)\Radmin VPN\RvRvpnGui.exe")
+                os.startfile("C:\\Users\\" + userAccount + "\\AppData\\Roaming\\.minecraft\\TLauncher.exe")
+                text2 = ""
+                break
             elif "volume" in text2:
-
-                print("changing the volume sir")
+                speak(random.choice(volumeSpeak))
                 import volumeHandControl
                 text2 = ""
                 continue
-            elif "virtual" in text2:
+            elif "virtual Mouse" in text2:
 
                 print("going to virtual mode")
                 import VirtualMouse

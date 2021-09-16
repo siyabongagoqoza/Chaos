@@ -24,4 +24,7 @@ class infow():
         return results
 
 
+#assist = infow()
+#assist.get_info("Iris")
+#print(assist.summarize("Iris"))
 

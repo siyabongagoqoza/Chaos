@@ -7,6 +7,9 @@ respondToWake = ["Yes sir?",
 reminder = ["Sir don't forget to",
             "before I go remember to"]
 
+volumeSpeak = ["Yes Sir",
+               "Changing the volume"]
+
 occuringReminder = ["Sir don't forget to",
                     "Remember to"]
 
