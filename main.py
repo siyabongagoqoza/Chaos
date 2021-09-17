@@ -9,6 +9,7 @@ import webbrowser
 import speedtest
 import time
 
+from searchexe import *
 from speechLibrary import *
 from netflix import *
 from News import *
@@ -240,10 +241,19 @@ def listen():
                 os.startfile("C:\Program Files (x86)\Steam\steam.exe")
                 text2 = ""
                 break
-            elif "Minecraft" in text2:
-                os.startfile("C:\Program Files (x86)\Radmin VPN\RvRvpnGui.exe")
-                os.startfile("C:\\Users\\" + userAccount + "\\AppData\\Roaming\\.minecraft\\TLauncher.exe")
+            elif "open" in text2:
+                infoSrch = text2.split()
+                indexW = infoSrch.index("open")
+                sIndex = indexW + 1
+                searchW = infoSrch[sIndex]
+                print(searchW)
+                scanFiles()
+                for i in addToDict:
+                    if searchW in i:
+                        os.startfile(addToDict[searchW])
+                        print(i)
                 text2 = ""
+                searchW = ""
                 break
             elif "volume" in text2:
                 speak(random.choice(volumeSpeak))

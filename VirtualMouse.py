@@ -5,7 +5,7 @@ import time
 import pyautogui
 
 ##########################
-wCam, hCam = 1024, 768
+wCam, hCam = 800, 600
 frameR = 100  # Frame Reduction
 smoothening = 7
 #########################
