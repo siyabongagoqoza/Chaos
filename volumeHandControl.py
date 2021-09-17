@@ -74,7 +74,7 @@ while True:
 
     # timer for volume change
     test = 0
-    if test == 3 or time.time() > timeout:
+    if test == 5 or time.time() > timeout:
         break
     test = test - 1
 

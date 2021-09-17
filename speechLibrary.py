@@ -5,7 +5,7 @@ respondToWake = ["Yes sir?",
                  "Ready to cause havoc"]
 
 reminder = ["Sir don't forget to",
-            "before I go remember to"]
+            "Sir remember to"]
 
 volumeSpeak = ["Yes Sir",
                "Changing the volume"]

@@ -32,14 +32,14 @@ print(userAccount)
 
 def writeNote(words):
 
-    fwrite = open("notes.txt", "w")
+    fwrite = open("C:\\Users\\"+userAccount+"\\PycharmProjects\\Chaos\\notes.txt", "w")
     fwrite.write(words)
     fwrite.close()
 
 
 def readNote():
 
-    fread = open("notes.txt", "r")
+    fread = open("C:\\Users\\"+userAccount+"\\PycharmProjects\\Chaos\\notes.txt", "r")
     contents = fread.read()
     return contents
 
@@ -56,23 +56,16 @@ def speak(text):
     engine.runAndWait()
 
 
-today_date = datetime.datetime.now()
-timeOfDay = today_date.strftime("%p")
-dayTime24 = int(today_date.strftime("%H"))
 # speech recognition
 r = sr.Recognizer()
 
-if timeOfDay == "AM":
-    speak("Good morning sir, how can I help?")
 
-if 12 <= dayTime24 <= 17:
-    speak("Good Afternoon sir, how can I help?")
-
-if 18 <= dayTime24 <= 23:
-    speak("Good evening sir, how can I help?")
 
 userAccount = getpass.getuser()
 print(userAccount)
+# timer reminder
+timeout = time.time() + 1800  # 1800 secs from now : 30 minutes
+timeoutAlarm = time.time() + 1
 
 
 # listens for commands
@@ -80,6 +73,8 @@ def listen():
     text2 = ""
     while True:
         print(text2)
+        today_date = datetime.datetime.now()
+
         try:
             with sr.Microphone() as source:
                 r.energy_threshold = 10000
@@ -273,6 +268,7 @@ def listen():
 
 # listens for its name to accept commands
 text = ""
+test = 0
 while True:
     with sr.Microphone() as source:
         r.energy_threshold = 10000
@@ -283,8 +279,9 @@ while True:
             text = r.recognize_google(audio)
             print(text)
         except:
-            continue
-
+            pass
+    # check time for alarm
+    today_date_alarm = datetime.datetime.now()
     if "chaos" in text:
         speak(random.choice(respondToWake))
         listen()
@@ -295,4 +292,13 @@ while True:
             speak(random.choice(reminder) + " " + readNote())
         speak("Okay shutting down")
         break
+
+    # reminder
+    if time.time() > timeout:
+        speak(random.choice(reminder) + " " + readNote())
+
+    if time.time() > timeoutAlarm:
+        if today_date_alarm.strftime("%I") == "12" and today_date_alarm.strftime("%M") == "00":
+            speak("It is lunch time Sir")
+
 

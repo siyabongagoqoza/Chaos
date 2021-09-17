@@ -21,8 +21,6 @@ class movies():
         password.send_keys('$iyabonga99')
         enter = self.driver.find_element_by_xpath('//*[@id="appMountPoint"]/div/div[3]/div/div/div[1]/form/button')
         enter.click()
-        profile = self.driver.find_element_by_xpath('//*[@id="appMountPoint"]/div/div/div[1]/div[1]/div[2]/div/div/ul/li[1]/div/a/div/div')
-        profile.click()
 
 
 
