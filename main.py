@@ -59,7 +59,15 @@ def speak(text):
 # speech recognition
 r = sr.Recognizer()
 
+greetingTime = datetime.datetime.now()
+if 00 <= int(greetingTime.strftime("%H")) <= 11:
+    speak("Good Morning Sir, how can I help?")
 
+if 12 <= int(greetingTime.strftime("%H")) <= 16:
+    speak("Good afternoon Sir, how can I help?")
+
+if 17 <= int(greetingTime.strftime("%H")) <= 23:
+    speak("Good Evening Sir, how can I help?")
 
 userAccount = getpass.getuser()
 print(userAccount)
@@ -282,6 +290,7 @@ while True:
             pass
     # check time for alarm
     today_date_alarm = datetime.datetime.now()
+    #timeout = time.time() + 1800  # 1800 secs from now : 30 minutes
     if "chaos" in text:
         speak(random.choice(respondToWake))
         listen()
@@ -296,6 +305,7 @@ while True:
     # reminder
     if time.time() > timeout:
         speak(random.choice(reminder) + " " + readNote())
+        timeout = timeout + 1800  # refreshes the reminder timer for another 30 min
 
     if time.time() > timeoutAlarm:
         if today_date_alarm.strftime("%I") == "12" and today_date_alarm.strftime("%M") == "00":
