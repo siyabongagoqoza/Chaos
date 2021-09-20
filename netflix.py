@@ -19,8 +19,17 @@ class movies():
         password = self.driver.find_element_by_xpath('//*[@id="id_password"]')
         password.click()
         password.send_keys('$iyabonga99')
-        enter = self.driver.find_element_by_xpath('//*[@id="appMountPoint"]/div/div[3]/div/div/div[1]/form/button')
-        enter.click()
+        try:
+
+            enter = self.driver.find_element_by_xpath('//*[@id="appMountPoint"]/div/div[3]/div/div/div[1]/form/button')
+            enter.click()
+            # print(1 / 0)
+        except:
+
+            print("Initiate contingency")
+            enter2 = self.driver.find_element_by_css_selector('#appMountPoint > div > div.login-body > div > div > div.hybrid-login-form-main > form > button')
+            enter2.click()
 
 
-
+# assist = movies()
+# assist.wNetflix()

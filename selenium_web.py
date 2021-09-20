@@ -26,5 +26,5 @@ class infow():
 
 #assist = infow()
 #assist.get_info("Iris")
-#print(assist.summarize("Iris"))
+#print(assist.summarize("lollipop"))
 
