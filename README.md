@@ -17,4 +17,7 @@ Dependancies
   - pyautogui
   - opencv-python
   - mediapipe
+  - CMake
+  - face_recognition
+  - 
   
