@@ -18,6 +18,7 @@ from randomJoke import *
 from selenium_web import *
 from weather import *
 
+
 # registering text to speech module
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -60,6 +61,11 @@ def speak(text):
 r = sr.Recognizer()
 
 greetingTime = datetime.datetime.now()
+
+speak("Identify yourself")
+from Attendance import name
+
+
 if 00 <= int(greetingTime.strftime("%H")) <= 11:
     speak("Good Morning Sir, how can I help?")
 
@@ -290,7 +296,6 @@ while True:
             pass
     # check time for alarm
     today_date_alarm = datetime.datetime.now()
-    #timeout = time.time() + 1800  # 1800 secs from now : 30 minutes
     if "chaos" in text:
         speak(random.choice(respondToWake))
         listen()
