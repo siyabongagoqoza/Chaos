@@ -36,9 +36,10 @@ writeSpeak = ["what should I write?",
 openNetflix = ["Opening Netflix for you...",
                "going to Netflix"]
 
-introduction = ["My name is Chaos, I am your virtual assistant",
-                "I am Chaos",
-                "You can call me Chaos, Im here to help"]
+introduction = ["I am Chaos, I am a virtual artificial intelligence and I am here to assist you"
+                " with a variety of tasks as best"
+                " I can, twenty four seven, seven days a week"
+                ]
 
 newsRead = ["the latest headlines read as follows, ",
             "Sure sir,these are the top headlines, "]

@@ -1,12 +1,26 @@
 import getpass
 import time
-
+import datetime
+import pyttsx3 as p
 import cv2
 import numpy as np
 import face_recognition
 import os
 
 userAccount = getpass.getuser()
+
+engine = p.init('sapi5')
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 130)
+voices = engine.getProperty('voices')
+
+
+def speak(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+
+
 path = "C:\\Users\\"+userAccount+"\\PycharmProjects\\CHAOS\\imagesAttendance"
 images = []
 classNames = []
@@ -30,12 +44,12 @@ def findEncodings(images):
 
 encodeListKnown = findEncodings(images)
 # print(len(encodeListKnown))
-print("Encode Complete")
+speak("Identify yourself")
 
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 # id timer verification
-timeoutID = time.time() + 4
+timeoutID = time.time() + 5  # 5 seconds
 
 while True:
     success, img = cap.read()
@@ -59,12 +73,37 @@ while True:
         if not(name is None):
             print(name + " Identified")
             break
+        if name is None:
+            speak("You don't have permission Authorization")
+            continue
     except:
         pass
 
     # cv2.imshow("webcam", img)
     # cv2.waitKey(1)
 
+greetingTime = datetime.datetime.now()
+
+if name == "SIYABONGA GOQOZA":
+
+    if 00 <= int(greetingTime.strftime("%H")) <= 11:
+        speak("Good Morning Sir")
+
+    if 12 <= int(greetingTime.strftime("%H")) <= 16:
+        speak("Good afternoon Sir")
+
+    if 17 <= int(greetingTime.strftime("%H")) <= 23:
+        speak("Good Evening Sir")
+
+elif name == "ENRICO SAMUELS":
+    if 00 <= int(greetingTime.strftime("%H")) <= 11:
+        speak("Good Morning Enrico")
+
+    if 12 <= int(greetingTime.strftime("%H")) <= 16:
+        speak("Good afternoon Enrico")
+
+    if 17 <= int(greetingTime.strftime("%H")) <= 23:
+        speak("Good Evening Enrico")
 
 
 

@@ -14,7 +14,6 @@ from speechLibrary import *
 from netflix import *
 from News import *
 from YT_auto import *
-from randomJoke import *
 from selenium_web import *
 from weather import *
 
@@ -22,11 +21,22 @@ from weather import *
 # registering text to speech module
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
-engine.setProperty('rate', 130)
+engine.setProperty('rate', 125)
 voices = engine.getProperty('voices')
 
-st = speedtest.Speedtest()
 
+def speak(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+
+
+from Attendance import name
+
+speak("Importing all preferences from home interface")
+from randomJoke import *
+speak(joke_validate)
+st = speedtest.Speedtest()
 userAccount = getpass.getuser()
 print(userAccount)
 
@@ -51,29 +61,8 @@ def addToNote(words):
     fadd.close()
 
 
-def speak(text):
-    print(text)
-    engine.say(text)
-    engine.runAndWait()
-
-
 # speech recognition
 r = sr.Recognizer()
-
-greetingTime = datetime.datetime.now()
-
-speak("Identify yourself")
-from Attendance import name
-
-
-if 00 <= int(greetingTime.strftime("%H")) <= 11:
-    speak("Good Morning Sir, how can I help?")
-
-if 12 <= int(greetingTime.strftime("%H")) <= 16:
-    speak("Good afternoon Sir, how can I help?")
-
-if 17 <= int(greetingTime.strftime("%H")) <= 23:
-    speak("Good Evening Sir, how can I help?")
 
 userAccount = getpass.getuser()
 print(userAccount)
@@ -112,7 +101,7 @@ def listen():
                     searchW = infoSrch[sIndex]
                     print(searchW)
 
-                #speak("Got it Sir, here's what I know about {}".format(searchW))
+                # speak("Got it Sir, here's what I know about {}".format(searchW))
                 speak("Got it Sir, here's what I know")
 
                 assist = infow()
@@ -246,10 +235,6 @@ def listen():
                 speak("Happy to help")
                 text2 = ""
                 break
-            elif "Steam" in text2:
-                os.startfile("C:\Program Files (x86)\Steam\steam.exe")
-                text2 = ""
-                break
             elif "open" in text2:
                 infoSrch = text2.split()
                 indexW = infoSrch.index("open")
@@ -271,7 +256,7 @@ def listen():
                 continue
             elif "virtual Mouse" in text2:
 
-                print("going to virtual mode")
+                speak("going to virtual mode")
                 import VirtualMouse
                 text2 = ""
                 continue
@@ -280,6 +265,7 @@ def listen():
             break
 
 
+speak("System is now fully operational")
 # listens for its name to accept commands
 text = ""
 test = 0
@@ -301,19 +287,28 @@ while True:
         listen()
         text = ""
 
-    if "sleep" in text:
+    elif "sleep" in text:
         if not(readNote() == ""):
             speak(random.choice(reminder) + " " + readNote())
         speak("Okay shutting down")
         break
-
+    elif "standby" in text:
+        speak("okay Sir")
+        text = ""
+    elif "who are you" in text:
+        speak(random.choice(introduction))
+        text = ""
     # reminder
-    if time.time() > timeout:
+    elif time.time() > timeout:
         speak(random.choice(reminder) + " " + readNote())
         timeout = timeout + 1800  # refreshes the reminder timer for another 30 min
 
-    if time.time() > timeoutAlarm:
+    elif time.time() > timeoutAlarm:
         if today_date_alarm.strftime("%I") == "12" and today_date_alarm.strftime("%M") == "00":
             speak("It is lunch time Sir")
+
+    elif "who are you" in text:
+        speak(random.choice(introduction))
+        text2 = ""
 
 
