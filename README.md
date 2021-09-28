@@ -19,5 +19,5 @@ Dependancies
   - mediapipe
   - CMake
   - face_recognition
-  - 
+  - dlib 19.18
   
