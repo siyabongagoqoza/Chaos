@@ -163,11 +163,10 @@ def listen():
                 continue
 
             elif "joke" in text2:
-                speak("Sure sir, get ready for some humor")
-                joke()
-                for i in range(len(arrJ)):
-                    print(arrJ[i])
-                    speak(arrJ[i])
+                speak("Sure sir")
+                the_joke = getJoke()
+                for i in range(len(the_joke)):
+                    speak(the_joke[i])
                 text2 = ""
                 continue
             elif "date today" in text2:
@@ -184,6 +183,24 @@ def listen():
                 continue
             elif "weather" in text2:
                 speak(description)
+                text2 = ""
+                continue
+            elif "be cold" in text2:
+                if celsiusTemp <= 16:
+                    speak("Yes it will Sir" + ", I would suggest you " + comment)
+                if 17 <= celsiusTemp <= 20:
+                    speak("It will be a bit warm Sir" + ", I would suggest you " + comment)
+                if 21 <= celsiusTemp:
+                    speak("It will be hot" + ", I would suggest you " + comment)
+                text2 = ""
+                continue
+            elif "be warm" in text2:
+                if celsiusTemp <= 16:
+                    speak("No sir it will be cold" + ", I would suggest you " + comment)
+                if 17 <= celsiusTemp <= 20:
+                    speak("Yes Sir" + ", I would suggest you " + comment)
+                if 21 <= celsiusTemp:
+                    speak("Yes will be hot in fact" + ", I would suggest you " + comment)
                 text2 = ""
                 continue
             elif "sick beats" in text2:
@@ -262,7 +279,7 @@ def listen():
                 continue
 
         except KeyboardInterrupt:
-            break
+            continue
 
 
 speak("System is now fully operational")
@@ -270,45 +287,47 @@ speak("System is now fully operational")
 text = ""
 test = 0
 while True:
-    with sr.Microphone() as source:
-        r.energy_threshold = 10000
-        r.adjust_for_ambient_noise(source)
-        print("listening")
-        audio = r.listen(source)
-        try:
-            text = r.recognize_google(audio)
-            print(text)
-        except:
-            pass
-    # check time for alarm
-    today_date_alarm = datetime.datetime.now()
-    if "chaos" in text:
-        speak(random.choice(respondToWake))
-        listen()
-        text = ""
+    try:
+        with sr.Microphone() as source:
+            r.energy_threshold = 10000
+            r.adjust_for_ambient_noise(source)
+            print("listening")
+            audio = r.listen(source)
+            try:
+                text = r.recognize_google(audio)
+                print(text)
+            except:
+                pass
+        # check time for alarm
+        today_date_alarm = datetime.datetime.now()
+        if "chaos" in text:
+            speak(random.choice(respondToWake))
+            listen()
+            text = ""
 
-    elif "sleep" in text:
-        if not(readNote() == ""):
+        elif "sleep" in text:
+            if not(readNote() == ""):
+                speak(random.choice(reminder) + " " + readNote())
+            speak("Okay shutting down")
+            break
+        elif "standby" in text:
+            speak("okay Sir")
+            text = ""
+        elif "who are you" in text:
+            speak(random.choice(introduction))
+            text = ""
+        # reminder
+        elif time.time() > timeout:
             speak(random.choice(reminder) + " " + readNote())
-        speak("Okay shutting down")
-        break
-    elif "standby" in text:
-        speak("okay Sir")
-        text = ""
-    elif "who are you" in text:
-        speak(random.choice(introduction))
-        text = ""
-    # reminder
-    elif time.time() > timeout:
-        speak(random.choice(reminder) + " " + readNote())
-        timeout = timeout + 1800  # refreshes the reminder timer for another 30 min
+            timeout = timeout + 1800  # refreshes the reminder timer for another 30 min
 
-    elif time.time() > timeoutAlarm:
-        if today_date_alarm.strftime("%I") == "12" and today_date_alarm.strftime("%M") == "00":
-            speak("It is lunch time Sir")
+        elif time.time() > timeoutAlarm:
+            if today_date_alarm.strftime("%I") == "12" and today_date_alarm.strftime("%M") == "00":
+                speak("It is lunch time Sir")
 
-    elif "who are you" in text:
-        speak(random.choice(introduction))
-        text2 = ""
-
+        elif "who are you" in text:
+            speak(random.choice(introduction))
+            text2 = ""
+    except KeyboardInterrupt:
+        continue
 

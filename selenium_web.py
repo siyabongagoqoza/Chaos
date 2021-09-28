@@ -2,6 +2,19 @@ from selenium import webdriver
 
 import wikipedia
 import getpass
+import pyttsx3 as p
+
+engine = p.init('sapi5')
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 125)
+voices = engine.getProperty('voices')
+
+
+def speak(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+
 
 class infow():
     def __init__(self):
@@ -19,12 +32,16 @@ class infow():
         enter.click()
 
     def summarize(self, query):
-        results = wikipedia.summary(query, sentences=2)
-        print(results)
-        return results
+        try:
+            results = wikipedia.summary(query, sentences=2)
+            print(results)
+            return results
+        except:
+            speak("Sir the term " + query + " can refer to various titles, "
+                                            "a more specific query will suffice")
+            pass
 
-
-#assist = infow()
-#assist.get_info("Iris")
-#print(assist.summarize("lollipop"))
+# assist = infow()
+# assist.get_info("Iris")
+# print(assist.summarize("lollipop"))
 
