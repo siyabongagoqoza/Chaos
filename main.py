@@ -8,7 +8,9 @@ import googlesearch
 import webbrowser
 import speedtest
 import time
+import psutil as sys
 
+from PC_stats import endProcess
 from searchexe import *
 from speechLibrary import *
 from netflix import *
@@ -36,7 +38,6 @@ from Attendance import name
 speak("Importing all preferences from home interface")
 from randomJoke import *
 speak(joke_validate)
-st = speedtest.Speedtest()
 userAccount = getpass.getuser()
 print(userAccount)
 
@@ -66,9 +67,6 @@ r = sr.Recognizer()
 
 userAccount = getpass.getuser()
 print(userAccount)
-# timer reminder
-timeout = time.time() + 1800  # 1800 secs from now : 30 minutes
-timeoutAlarm = time.time() + 1
 
 
 # listens for commands
@@ -214,11 +212,13 @@ def listen():
                 text2 = ""
                 break
             elif "download speed" in text2:
-                speak("Sir the download speed is " + str(int(st.download())))
+                st = speedtest.Speedtest()
+                speak("Sir the download speed is " + str(int((st.download()/1000)/1000)) + " Megabits per second")
                 text2 = ""
                 continue
             elif "upload speed" in text2:
-                speak("Sir the upload speed is " + str(int(st.upload())))
+                st = speedtest.Speedtest()
+                speak("Sir the upload speed is " + str(int((st.upload()/1000)/1000)) + " Megabits per second")
                 text2 = ""
                 continue
             elif "write" in text2:
@@ -238,12 +238,6 @@ def listen():
                 writeNote(text2)
                 text2 = ""
                 continue
-            elif "Netflix" in text2:
-                speak(random.choice(openNetflix))
-                assist = movies()
-                assist.wNetflix()
-                text2 = ""
-                break
             elif "who are you" in text2:
                 speak(random.choice(introduction))
                 text2 = ""
@@ -282,6 +276,10 @@ def listen():
             continue
 
 
+# timer reminder
+timeout = time.time() + 1800  # 1800 secs from now : 30 minutes
+timeoutAlarm = time.time() + 0.5
+stats_check = time.time() + 0.5  # check starts every one second
 speak("System is now fully operational")
 # listens for its name to accept commands
 text = ""
@@ -325,9 +323,26 @@ while True:
             if today_date_alarm.strftime("%I") == "12" and today_date_alarm.strftime("%M") == "00":
                 speak("It is lunch time Sir")
 
-        elif "who are you" in text:
-            speak(random.choice(introduction))
-            text2 = ""
+            if sys.virtual_memory().percent >= 90.0:
+                speak("Sir the system  is using 90 percent of Memory,"
+                      " should I terminate the processes causing overload?")
+                with sr.Microphone() as source:
+                    r.energy_threshold = 10000
+                    r.adjust_for_ambient_noise(source)
+                    print("listening")
+                    audio = r.listen(source)
+                    try:
+                        text = r.recognize_google(audio)
+                        print(text)
+                    except:
+                        pass
+                if "yes" in text:
+                    speak("Terminating the following programs")
+                    endProcess()
+                elif "no" in text:
+                    speak("Sir this will slow down the computer's performance to undesirable speeds")
+            timeoutAlarm = time.time() + 0.5
+
     except KeyboardInterrupt:
         continue
 
