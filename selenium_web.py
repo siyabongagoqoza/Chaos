@@ -1,9 +1,6 @@
-from selenium import webdriver
-
-import wikipedia
-import getpass
 import pyttsx3 as p
 
+# registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
 engine.setProperty('rate', 125)
@@ -14,6 +11,17 @@ def speak(text):
     print(text)
     engine.say(text)
     engine.runAndWait()
+
+
+try:
+    from selenium import webdriver
+except:
+    speak("I am missing the selenium module")
+try:
+    import wikipedia
+except:
+    speak("I am missing the wikipedia module")
+import getpass
 
 
 class infow():

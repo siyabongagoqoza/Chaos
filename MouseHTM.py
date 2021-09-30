@@ -1,5 +1,26 @@
-import cv2
-import mediapipe as mp
+import pyttsx3 as p
+
+# registering text to speech module FIRST
+engine = p.init('sapi5')
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 125)
+voices = engine.getProperty('voices')
+
+
+def speak(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+
+
+try:
+    import cv2
+except:
+    speak("I am missing the opencv-python module")
+try:
+    import mediapipe as mp
+except:
+    speak("I am missing the module mediapipe")
 import time
 import math
 import numpy as np

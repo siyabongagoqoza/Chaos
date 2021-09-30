@@ -1,17 +1,9 @@
-import getpass
-import time
-import datetime
 import pyttsx3 as p
-import cv2
-import numpy as np
-import face_recognition
-import os
 
-userAccount = getpass.getuser()
-
+# registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
-engine.setProperty('rate', 130)
+engine.setProperty('rate', 125)
 voices = engine.getProperty('voices')
 
 
@@ -20,6 +12,22 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
+
+import getpass
+import time
+import datetime
+try:
+    import cv2
+except:
+    speak("I am missing the opencv-python")
+import numpy as np
+try:
+    import face_recognition
+except:
+    speak("I maybe missing the face_recognition, dlib and cmake")
+import os
+
+userAccount = getpass.getuser()
 
 path = "C:\\Users\\"+userAccount+"\\PycharmProjects\\CHAOS\\imagesAttendance"
 images = []

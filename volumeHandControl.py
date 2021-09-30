@@ -1,4 +1,21 @@
-import cv2
+import pyttsx3 as p
+
+# registering text to speech module FIRST
+engine = p.init('sapi5')
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 125)
+voices = engine.getProperty('voices')
+
+
+def speak(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+
+try:
+    import cv2
+except:
+    speak("I am missing the opencv-python module")
 import time
 import numpy as np
 import handtrackingModule as htm

@@ -1,26 +1,8 @@
-import os
-import random
+# MODULES -----------------------------------------
+
 import pyttsx3 as p
-import speech_recognition as sr
-import randfacts
-import datetime
-import googlesearch
-import webbrowser
-import speedtest
-import time
-import psutil as sys
 
-from PC_stats import endProcess
-from searchexe import *
-from speechLibrary import *
-from netflix import *
-from News import *
-from YT_auto import *
-from selenium_web import *
-from weather import *
-
-
-# registering text to speech module
+# registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
 engine.setProperty('rate', 125)
@@ -31,6 +13,45 @@ def speak(text):
     print(text)
     engine.say(text)
     engine.runAndWait()
+
+
+import os
+import random
+try:
+    import speech_recognition as sr
+except:
+    speak("I am missing the speechrecognition module")
+try:
+    import randfacts
+except:
+    speak("I am missing the randfacts module")
+import datetime
+try:
+    import googlesearch
+except:
+    speak("I am missing the google module")
+import webbrowser
+try:
+    import speedtest
+except:
+    speak("I am missing the speedtest-cli module")
+import time
+try:
+    import psutil as sys
+except:
+    speak("I am missing the psutil module")
+
+# MODULES ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+from PC_stats import endProcess
+from searchexe import *
+from speechLibrary import *
+from News import *
+from YT_auto import *
+from selenium_web import *
+from weather import *
+
+
 
 
 from Attendance import name

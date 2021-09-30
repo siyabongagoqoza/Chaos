@@ -1,5 +1,22 @@
-import requests
+import pyttsx3 as p
 
+# registering text to speech module FIRST
+engine = p.init('sapi5')
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 125)
+voices = engine.getProperty('voices')
+
+
+def speak(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+
+
+try:
+    import requests
+except:
+    speak("I am missing the requests module")
 from apiKeys import *
 
 url = "https://api.ambeedata.com/weather/latest/by-lat-lng"
@@ -11,9 +28,9 @@ headers = {
 response = requests.request("GET", url, headers=headers, params=querystring).json()
 
 celsiusTemp = int((((response["data"]["apparentTemperature"]) - 32) * 5/9))
-#print(int(celsiusTemp))
+# print(int(celsiusTemp))
 summary = response["data"]["summary"]
-#print(summary)
+# print(summary)
 
 
 comment = ""
