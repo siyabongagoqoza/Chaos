@@ -21,4 +21,5 @@ Dependancies
   - face_recognition
   - dlib 19.18
   - psutil
+  - pydrive
   
