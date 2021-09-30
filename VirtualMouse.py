@@ -23,7 +23,7 @@ import time
 try:
     import pyautogui
 except:
-    speak("Missing the module pyautogui")
+    speak("I am missing the pyautogui module")
 
 ##########################
 wCam, hCam = 800, 600

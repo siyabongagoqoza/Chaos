@@ -19,12 +19,12 @@ import datetime
 try:
     import cv2
 except:
-    speak("I am missing the opencv-python")
+    speak("I am missing the opencv-python module")
 import numpy as np
 try:
     import face_recognition
 except:
-    speak("I maybe missing the face_recognition, dlib and cmake")
+    speak("I maybe missing the face_recognition, dlib and cmake modules")
 import os
 
 userAccount = getpass.getuser()

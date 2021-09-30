@@ -18,6 +18,13 @@ def speak(text):
 import os
 import random
 try:
+    from pydrive.auth import GoogleAuth
+    from pydrive.drive import GoogleDrive
+except:
+    speak("I am missing the pydrive module")
+import shutil
+from shutil import make_archive
+try:
     import speech_recognition as sr
 except:
     speak("I am missing the speechrecognition module")
@@ -51,9 +58,6 @@ from YT_auto import *
 from selenium_web import *
 from weather import *
 
-
-
-
 from Attendance import name
 
 speak("Importing all preferences from home interface")
@@ -61,6 +65,8 @@ from randomJoke import *
 speak(joke_validate)
 userAccount = getpass.getuser()
 print(userAccount)
+gauth = GoogleAuth()
+drive = GoogleDrive(gauth)
 
 
 def writeNote(words):
@@ -88,6 +94,34 @@ r = sr.Recognizer()
 
 userAccount = getpass.getuser()
 print(userAccount)
+
+
+# zips save game folders
+def zip_minecraft_naruto():
+    # get the path to the files
+    srcMinecraft = os.path.realpath('C:\\Users\\'+userAccount+'\\AppData\\Roaming\\.minecraft\\'
+                                    'versions\\RLCraft 1.12.2 - Beta v2.8.2\\saves\\Chaos Dimension')
+    srcNarutoSS = os.path.realpath('C:\\Users\\' + userAccount + '\\Saved Games\\NARUTO TO BORUTO SHINOBI STRIKER')
+    # put things into ZIP archive
+    root_dir, tail = os.path.split(srcMinecraft)
+    shutil.make_archive("Chaos Dimension", "zip", root_dir)
+    root_dir2, tail = os.path.split(srcNarutoSS)
+    shutil.make_archive("NarutoSS", "zip", root_dir2)
+
+
+# uploads save game zip files to google drive
+def upload_to_drive():
+    zip_minecraft_naruto()  # Zips the file
+    upload_file_list = ['Chaos Dimension.zip', 'NarutoSS.zip']
+    for upload_file in upload_file_list:
+        gfile = drive.CreateFile({'parents': [{'id': '1cPAp2_tREoJVmYJxEYKTjGTnUqActJt2'}]})
+        # Read file and set it as the content of this instance.
+        gfile.SetContentFile(upload_file)
+        gfile.Upload()  # upload the file
+
+    os.remove('Chaos Dimension.zip')
+    os.remove('NarutoSS.zip')
+    speak("The files have been stored in the cloud")
 
 
 # listens for commands
@@ -292,10 +326,15 @@ def listen():
                 import VirtualMouse
                 text2 = ""
                 continue
+            elif "upload my save game files" in text2:
+                speak("I am uploading them now Sir")
+                upload_to_drive()
 
         except KeyboardInterrupt:
             continue
 
+
+upload_to_drive()
 
 # timer reminder
 timeout = time.time() + 1800  # 1800 secs from now : 30 minutes
