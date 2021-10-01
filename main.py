@@ -18,13 +18,6 @@ def speak(text):
 import os
 import random
 try:
-    from pydrive.auth import GoogleAuth
-    from pydrive.drive import GoogleDrive
-except:
-    speak("I am missing the pydrive module")
-import shutil
-from shutil import make_archive
-try:
     import speech_recognition as sr
 except:
     speak("I am missing the speechrecognition module")
@@ -56,7 +49,7 @@ from speechLibrary import *
 from News import *
 from YT_auto import *
 from selenium_web import *
-from weather import *
+from weather2 import *
 from uploadToCloud.googleDrive import *
 
 from Attendance import name
@@ -203,28 +196,37 @@ def listen():
                 speak("It is " + today_date.strftime("%I") + " " + today_date.strftime("%M") + today_date.strftime("%p"))
                 text2 = ""
                 continue
-            elif "weather" in text2:
-                speak(description)
+            elif "weather today" in text2:
+                infoSrch = text2.split()
+                indexW = infoSrch.index("in")
+                sIndex = indexW + 1
+                try:
+                    searchW = infoSrch[sIndex] + " " + infoSrch[sIndex + 1]
+                    print(searchW)
+                except:
+                    searchW = infoSrch[sIndex]
+                    print(searchW)
+
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(getweatherToday(searchW))
                 text2 = ""
                 continue
-            elif "be cold" in text2:
-                if celsiusTemp <= 16:
-                    speak("Yes it will Sir" + ", I would suggest you " + comment)
-                if 17 <= celsiusTemp <= 20:
-                    speak("It will be a bit warm Sir" + ", I would suggest you " + comment)
-                if 21 <= celsiusTemp:
-                    speak("It will be hot" + ", I would suggest you " + comment)
+            elif "weather tomorrow" in text2:
+                infoSrch = text2.split()
+                indexW = infoSrch.index("in")
+                sIndex = indexW + 1
+                try:
+                    searchW = infoSrch[sIndex] + " " + infoSrch[sIndex + 1]
+                    print(searchW)
+                except:
+                    searchW = infoSrch[sIndex]
+                    print(searchW)
+
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(getweatherTomorrow(searchW))
                 text2 = ""
                 continue
-            elif "be warm" in text2:
-                if celsiusTemp <= 16:
-                    speak("No sir it will be cold" + ", I would suggest you " + comment)
-                if 17 <= celsiusTemp <= 20:
-                    speak("Yes Sir" + ", I would suggest you " + comment)
-                if 21 <= celsiusTemp:
-                    speak("Yes will be hot in fact" + ", I would suggest you " + comment)
-                text2 = ""
-                continue
+
             elif "sick beats" in text2:
                 speak(random.choice(playSickBeats))
                 webbrowser.open("https://www.youtube.com/watch?v=wLoWd2KyUro&list=PLR5Cmjo90BNguiSb2wDShPdKoa-Xiw5x1")
@@ -298,11 +300,20 @@ def listen():
             elif "upload my save game files" in text2:
                 speak("I am uploading them now Sir")
                 upload_to_drive()
+                text2 = ""
+                continue
+            elif "shutdown" in text2:
+                speak("Okay Shutting down")
+                os.system('shutdown /s /t 1')
+            elif "restart" in text2:
+                speak("Okay restarting the system")
+                os.system('shutdown /r /t 1')
+            elif "logout" in text2:
+                speak("Okay logging out sir")
+                os.system('shutdown -1')
 
         except KeyboardInterrupt:
             continue
-
-
 
 
 # timer reminder
@@ -335,7 +346,7 @@ while True:
         elif "sleep" in text:
             if not(readNote() == ""):
                 speak(random.choice(reminder) + " " + readNote())
-            speak("Okay shutting down")
+            speak("Okay going to sleep")
             break
         elif "standby" in text:
             speak("okay Sir")
