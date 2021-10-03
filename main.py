@@ -1,4 +1,6 @@
 # MODULES -----------------------------------------
+import psutil
+
 from installMissingModules import *
 import pyttsx3 as p
 
@@ -363,6 +365,7 @@ while True:
             listen()
             text = ""
         elif "clear my reminder" in text:
+            speak("I am clearing your reminder")
             writeNote("")
             text = ""
             continue
@@ -386,7 +389,7 @@ while True:
             if today_date_alarm.strftime("%I") == "12" and today_date_alarm.strftime("%M") == "00":
                 speak("It is lunch time Sir")
 
-            if sys.virtual_memory().percent >= 90.0:
+            if psutil.virtual_memory().percent >= 90.0:
                 speak("Sir the system  is using 90 percent of Memory,"
                       " should I terminate the processes causing overload?")
                 with sr.Microphone() as source:

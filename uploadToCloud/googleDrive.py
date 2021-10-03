@@ -2,7 +2,14 @@ import getpass
 import os
 
 import pyttsx3 as p
-from installMissingModules import *
+import subprocess
+import sys
+
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -30,7 +37,14 @@ userAccount = getpass.getuser()
 print(userAccount)
 
 client_json_path = 'C:\\Users\\'+userAccount+'\\PycharmProjects\\Chaos\\uploadToCloud\\client_secrets.json'
-GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = client_json_path
+try:
+    GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = client_json_path
+except:
+    if userAccount == "Cash":
+        os.startfile('C:\\Users\\'+userAccount+'\\PycharmProjects\\Chaos\\CHAOS.bat')
+    if userAccount == "Siyabonga Goqoza":
+        os.startfile('C:\\Users\\'+userAccount+'\\PycharmProjects\\Chaos\\CHAOS-Work.bat')
+
 gauth = GoogleAuth()
 drive = GoogleDrive(gauth)
 
