@@ -44,8 +44,17 @@ introduction = ["I am Chaos, I am a virtual artificial intelligence and I am her
 newsRead = ["the latest headlines read as follows, ",
             "Sure sir,these are the top headlines, "]
 
-eighty = ["Sir system  is using eighty percent of the CPU, I would advise you terminate some programs"]
-ninety = ["Sir system  is using ninety percent of the CPU, Should i terminate some programs?",
-          "System CPU usage is ninety percent, this will slow down the computer"]
-hundrd = ["Sir the system is overloaded, please terminate "]
+presentation1 = ["Allow me to introduce myself, I am Chaos,"
+                 " I am a virtual artificial intelligence and I am here to assist you"
+                 " with a variety of tasks as best"
+                 " I can, twenty four seven, seven days a week"]
+
+presentation2 = [" You can ask me about the weather"
+                 ", to back up your files on google drive"
+                 ", tell jokes"
+                 ", and a lot of stuff but"
+                 " I am guessing my monotone voice will bore you to death"
+                 " so I'll let Siyabonga take over,"]
+
+
 

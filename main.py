@@ -1,8 +1,9 @@
 # MODULES -----------------------------------------
-
+from installMissingModules import *
 import pyttsx3 as p
 
 # registering text to speech module FIRST
+
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
 engine.setProperty('rate', 125)
@@ -21,25 +22,30 @@ try:
     import speech_recognition as sr
 except:
     speak("I am missing the speechrecognition module")
+    install("speechrecognition")
 try:
     import randfacts
 except:
     speak("I am missing the randfacts module")
+    install("randfacts")
 import datetime
 try:
     import googlesearch
 except:
     speak("I am missing the google module")
+    install("google")
 import webbrowser
 try:
     import speedtest
 except:
     speak("I am missing the speedtest-cli module")
+    install("speedtest-cli")
 import time
 try:
     import psutil as sys
 except:
     speak("I am missing the psutil module")
+    install("psutil")
 
 # MODULES ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -51,6 +57,8 @@ from YT_auto import *
 from selenium_web import *
 from weather2 import *
 from uploadToCloud.googleDrive import *
+from powerpointpresenting import intro_pres
+
 
 from Attendance import name
 
@@ -65,6 +73,13 @@ print(userAccount)
 def writeNote(words):
 
     fwrite = open("C:\\Users\\"+userAccount+"\\PycharmProjects\\Chaos\\notes.txt", "w")
+    fwrite.write(words)
+    fwrite.close()
+
+
+def addToNotes(words):
+
+    fwrite = open("C:\\Users\\"+userAccount+"\\PycharmProjects\\Chaos\\notes.txt", "a")
     fwrite.write(words)
     fwrite.close()
 
@@ -311,6 +326,11 @@ def listen():
             elif "logout" in text2:
                 speak("Okay logging out sir")
                 os.system('shutdown -1')
+            elif "present yourself" in text2:
+                speak("Sure sir")
+                intro_pres()
+                text2 = ""
+                continue
 
         except KeyboardInterrupt:
             continue
@@ -342,7 +362,10 @@ while True:
             speak(random.choice(respondToWake))
             listen()
             text = ""
-
+        elif "clear my reminder" in text:
+            writeNote("")
+            text = ""
+            continue
         elif "sleep" in text:
             if not(readNote() == ""):
                 speak(random.choice(reminder) + " " + readNote())

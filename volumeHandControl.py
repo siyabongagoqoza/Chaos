@@ -1,5 +1,5 @@
 import pyttsx3 as p
-
+from installMissingModules import *
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -16,6 +16,7 @@ try:
     import cv2
 except:
     speak("I am missing the opencv-python module")
+    install("opencv-python")
 import time
 import numpy as np
 import handtrackingModule as htm
@@ -23,8 +24,11 @@ import math
 
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-
+try:
+    from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+except:
+    speak("I am missing the pycaw module")
+    install("pycaw")
 
 ####################
 wCam, hCam = 648, 488

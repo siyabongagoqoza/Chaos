@@ -1,5 +1,5 @@
 import pyttsx3 as p
-
+from installMissingModules import *
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -17,6 +17,7 @@ try:
     import psutil
 except:
     speak("I am missing the psutil module")
+    install("psutil")
 
 
 def getListOfProcessSortedByMemory():

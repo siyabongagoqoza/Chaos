@@ -1,5 +1,5 @@
 import pyttsx3 as p
-
+from installMissingModules import *
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -17,6 +17,7 @@ try:
     import python_weather
 except:
     speak("I am missing the module python_weather")
+    install("python_weather")
 import asyncio
 import datetime
 
@@ -78,6 +79,6 @@ async def getweatherTomorrow(query):
     await client.close()
 
 
-loop = asyncio.get_event_loop()
+# loop = asyncio.get_event_loop()
 # loop.run_until_complete(getweatherToday("cape town"))
-loop.run_until_complete(getweatherTomorrow("cape town"))
+# loop.run_until_complete(getweatherTomorrow("cape town"))

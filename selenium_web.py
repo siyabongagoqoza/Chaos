@@ -1,5 +1,5 @@
 import pyttsx3 as p
-
+from installMissingModules import *
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -17,10 +17,12 @@ try:
     from selenium import webdriver
 except:
     speak("I am missing the selenium module")
+    install("selenium")
 try:
     import wikipedia
 except:
     speak("I am missing the wikipedia module")
+    install("wikipedia")
 import getpass
 
 

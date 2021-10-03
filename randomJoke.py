@@ -1,4 +1,22 @@
-import requests
+import pyttsx3 as p
+from installMissingModules import *
+# registering text to speech module FIRST
+engine = p.init('sapi5')
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 125)
+voices = engine.getProperty('voices')
+
+
+def speak(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+
+try:
+    import requests
+except:
+    speak("I am missing the requests modules")
+    install("requests")
 
 try:
     joke_validate = ""

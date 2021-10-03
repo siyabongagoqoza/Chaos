@@ -1,4 +1,5 @@
 import pyttsx3 as p
+from installMissingModules import *
 
 # registering text to speech module FIRST
 engine = p.init('sapi5')
@@ -17,6 +18,7 @@ try:
     import requests
 except:
     speak("I am missing the requests module")
+    install("requests")
 
 from apiKeys import *
 from checkConnection import *

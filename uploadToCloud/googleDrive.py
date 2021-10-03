@@ -2,7 +2,7 @@ import getpass
 import os
 
 import pyttsx3 as p
-
+from installMissingModules import *
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -21,6 +21,7 @@ try:
     from pydrive.drive import GoogleDrive
 except:
     speak("I am missing the pydrive module")
+    install("pydrive")
 import shutil
 from shutil import make_archive
 

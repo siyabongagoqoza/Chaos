@@ -1,5 +1,5 @@
 import pyttsx3 as p
-
+from installMissingModules import *
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
@@ -17,10 +17,12 @@ try:
     import cv2
 except:
     speak("I am missing the opencv-python module")
+    install("opencv-python")
 try:
     import mediapipe as mp
 except:
     speak("I am missing the module mediapipe")
+    install("mediapipe")
 import time
 import math
 import numpy as np
