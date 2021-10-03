@@ -23,5 +23,6 @@ Dependancies
   - psutil
   - pydrive
   - python_weather
+  - pycaw
 
   
