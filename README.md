@@ -22,7 +22,4 @@ Dependancies
   - dlib 19.18
   - psutil
   - pydrive
-  - python_weather
-  - pycaw
-
   

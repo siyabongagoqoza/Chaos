@@ -1,5 +1,6 @@
 # MODULES -----------------------------------------
 import psutil
+import wikipedia
 
 from installMissingModules import *
 import pyttsx3 as p
@@ -8,7 +9,7 @@ import pyttsx3 as p
 
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
-engine.setProperty('rate', 125)
+engine.setProperty('rate', 127)
 voices = engine.getProperty('voices')
 
 
@@ -60,7 +61,7 @@ from selenium_web import *
 from weather2 import *
 from uploadToCloud.googleDrive import *
 from powerpointpresenting import intro_pres
-
+from whatsappAUTO import *
 
 from Attendance import name
 
@@ -126,19 +127,13 @@ def listen():
                 infoSrch = text2.split()
                 indexW = infoSrch.index("about")
                 sIndex = indexW + 1
-                try:
-                    searchW = infoSrch[sIndex] + " " + infoSrch[sIndex+1]
-                    print(searchW)
-                except:
-                    searchW = infoSrch[sIndex]
-                    print(searchW)
+                searchW = infoSrch[sIndex::]
+                print(searchW)
 
                 # speak("Got it Sir, here's what I know about {}".format(searchW))
                 speak("Got it Sir, here's what I know")
 
-                assist = infow()
-                assist.get_info(searchW)
-                speak(assist.summarize(searchW))
+                speak(wikipedia.summary(searchW,sentences=3))
                 text2 = ""
                 searchW = ""
                 break
@@ -147,14 +142,13 @@ def listen():
                 infoSrch = text2.split()
                 indexW = infoSrch.index("search")
                 sIndex = indexW + 1
-                searchW = infoSrch[sIndex]
+                searchW = infoSrch[sIndex::]
                 print(searchW)
 
                 speak("Got it")
 
-                for j in googlesearch.search(searchW, tld='com', lang='en', num=1, stop=1, pause=2.0):
-                    print(j)
-                    webbrowser.open(j)
+                link = 'https://www.google.com/search?q={}'.format(searchW)
+                webbrowser.open(link)
 
                 text2 = ""
                 searchW = ""
@@ -217,12 +211,8 @@ def listen():
                 infoSrch = text2.split()
                 indexW = infoSrch.index("in")
                 sIndex = indexW + 1
-                try:
-                    searchW = infoSrch[sIndex] + " " + infoSrch[sIndex + 1]
-                    print(searchW)
-                except:
-                    searchW = infoSrch[sIndex]
-                    print(searchW)
+                searchW = infoSrch[sIndex::]
+                print(searchW)
 
                 loop = asyncio.get_event_loop()
                 loop.run_until_complete(getweatherToday(searchW))
@@ -232,12 +222,8 @@ def listen():
                 infoSrch = text2.split()
                 indexW = infoSrch.index("in")
                 sIndex = indexW + 1
-                try:
-                    searchW = infoSrch[sIndex] + " " + infoSrch[sIndex + 1]
-                    print(searchW)
-                except:
-                    searchW = infoSrch[sIndex]
-                    print(searchW)
+                searchW = infoSrch[sIndex::]
+                print(searchW)
 
                 loop = asyncio.get_event_loop()
                 loop.run_until_complete(getweatherTomorrow(searchW))
@@ -264,21 +250,26 @@ def listen():
                 speak("Sir the upload speed is " + str(int((st.upload()/1000)/1000)) + " Megabits per second")
                 text2 = ""
                 continue
-            elif "write" in text2:
-                speak("what should I write?")
-                with sr.Microphone() as source:
-                    r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source)
-                    print("listening")
-                    audio = r.listen(source)
-                    try:
-                        text2 = r.recognize_google(audio)
-                        print(text)
-                    except:
-                        speak("couldn\'t catch that sir")
-                        continue
+            elif "remind me to" in text2:
+                infoSrch = text2.split()
+                indexW = infoSrch.index("to")
+                sIndex = indexW + 1
+                searchW = infoSrch[sIndex::]
+                print(searchW)
+
+                writeNote(searchW)
                 speak("okay, I am done")
-                writeNote(text2)
+                text2 = ""
+                continue
+            elif "also remind" in text2:
+                infoSrch = text2.split()
+                indexW = infoSrch.index("to")
+                sIndex = indexW + 1
+                searchW = infoSrch[sIndex::]
+                print(searchW)
+
+                writeNote(" and to "+searchW)
+                speak("okay, I am done")
                 text2 = ""
                 continue
             elif "who are you" in text2:
@@ -331,6 +322,27 @@ def listen():
             elif "present yourself" in text2:
                 speak("Sure sir")
                 intro_pres()
+                text2 = ""
+                continue
+            elif "text" in text2:
+                infoSrch = text2.split()
+                indexW = infoSrch.index("text")
+                sIndex = indexW + 1
+                whatppname = infoSrch[sIndex::]
+                print(whatppname)
+                with sr.Microphone() as source:
+                    r.energy_threshold = 10000
+                    r.adjust_for_ambient_noise(source)
+                    print("listening")
+                    audio = r.listen(source)
+                    try:
+                        textMessage = r.recognize_google(audio)
+                        print(textMessage)
+                    except:
+                        speak("couldn\'t quite catch that")
+                        continue
+                sendwhatmsg(whatppname, textMessage)
+                speak("okay, I am done")
                 text2 = ""
                 continue
 

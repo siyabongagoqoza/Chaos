@@ -8,7 +8,7 @@ import pyttsx3 as p
 
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
-engine.setProperty('rate', 125)
+engine.setProperty('rate', 127)
 voices = engine.getProperty('voices')
 
 import win32com.client

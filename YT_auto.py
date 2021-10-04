@@ -3,7 +3,7 @@ from installMissingModules import *
 # registering text to speech module FIRST
 engine = p.init('sapi5')
 rate = engine.getProperty('rate')
-engine.setProperty('rate', 125)
+engine.setProperty('rate', 127)
 voices = engine.getProperty('voices')
 
 
