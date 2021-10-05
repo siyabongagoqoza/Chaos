@@ -8,11 +8,17 @@ import datetime
 #     print("could not open cam")
 #
 # print(datetime.date.today() + datetime.timedelta(days=1))
-text2 = "text hello to Siya"
-infoSrch = text2.split()
-infoSrch.remove("text")
-sIndex = infoSrch.index("to")
-fullMsg = infoSrch[::sIndex]
-# whatppname = infoSrch[sIndex::]
-# print(whatppname)
-print(fullMsg)
+# Function to convert
+def listToString(s):
+    # initialize an empty string
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
+        str1 += ele + " "
+
+        # return string
+    return str1
+
+liste = ['a','e','d','f','g']
+print(listToString(liste))

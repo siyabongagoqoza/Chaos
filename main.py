@@ -1,6 +1,4 @@
 # MODULES -----------------------------------------
-import psutil
-import wikipedia
 
 from installMissingModules import *
 import pyttsx3 as p
@@ -45,11 +43,15 @@ except:
     install("speedtest-cli")
 import time
 try:
-    import psutil as sys
+    import psutil
 except:
     speak("I am missing the psutil module")
     install("psutil")
-
+try:
+    import wikipedia
+except:
+    speak("I am missing the wikipedia module")
+    install("wikipedia")
 # MODULES ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 from PC_stats import endProcess
@@ -63,7 +65,7 @@ from uploadToCloud.googleDrive import *
 from powerpointpresenting import intro_pres
 from whatsappAUTO import *
 
-from Attendance import name
+# from Attendance import name
 
 speak("Importing all preferences from home interface")
 from randomJoke import *
@@ -94,10 +96,16 @@ def readNote():
     return contents
 
 
-def addToNote(words):
-    fadd = open("notes.txt", "a")
-    fadd.append(words)
-    fadd.close()
+def listToString(s):
+    # initialize an empty string
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
+        str1 += ele + " "
+
+        # return string
+    return str1
 
 
 # speech recognition
@@ -257,18 +265,18 @@ def listen():
                 searchW = infoSrch[sIndex::]
                 print(searchW)
 
-                writeNote(searchW)
+                writeNote(listToString(searchW))
                 speak("okay, I am done")
                 text2 = ""
                 continue
-            elif "also remind" in text2:
+            elif "also I need to" in text2:
                 infoSrch = text2.split()
                 indexW = infoSrch.index("to")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
                 print(searchW)
 
-                writeNote(" and to "+searchW)
+                addToNotes(" and to "+listToString(searchW))
                 speak("okay, I am done")
                 text2 = ""
                 continue
@@ -281,6 +289,7 @@ def listen():
                 text2 = ""
                 break
             elif "open" in text2:
+
                 infoSrch = text2.split()
                 indexW = infoSrch.index("open")
                 sIndex = indexW + 1
@@ -291,6 +300,7 @@ def listen():
                     if searchW in i:
                         os.startfile(addToDict[searchW])
                         print(i)
+                        speak("Opening {}".format(i))
                 text2 = ""
                 searchW = ""
                 break
@@ -324,25 +334,34 @@ def listen():
                 intro_pres()
                 text2 = ""
                 continue
-            elif "text" in text2:
+            elif "tell me" in text2:
+                if not (readNote() == ""):
+                    speak(random.choice(reminder) + " " + readNote())
+                text2 = ""
+                continue
+            elif "WhatsApp" in text2:
                 infoSrch = text2.split()
-                indexW = infoSrch.index("text")
+                indexW = infoSrch.index("WhatsApp")
                 sIndex = indexW + 1
                 whatppname = infoSrch[sIndex::]
                 print(whatppname)
-                with sr.Microphone() as source:
-                    r.energy_threshold = 10000
-                    r.adjust_for_ambient_noise(source)
-                    print("listening")
-                    audio = r.listen(source)
-                    try:
-                        textMessage = r.recognize_google(audio)
-                        print(textMessage)
-                    except:
-                        speak("couldn\'t quite catch that")
-                        continue
-                sendwhatmsg(whatppname, textMessage)
-                speak("okay, I am done")
+                if whatppname[0] in contactList:
+                    speak("what should i say?")
+                    with sr.Microphone() as source:
+                        r.energy_threshold = 10000
+                        r.adjust_for_ambient_noise(source)
+                        print("listening")
+                        audio = r.listen(source)
+                        try:
+                            textMessage = r.recognize_google(audio)
+                            print(textMessage)
+                        except:
+                            speak("couldn\'t quite catch that")
+                            continue
+                    sendwhatmsg(whatppname, textMessage)
+                    speak("okay, I am done")
+                else:
+                    speak("This person is not on your contact list")
                 text2 = ""
                 continue
 
