@@ -161,7 +161,33 @@ def listen():
                 text2 = ""
                 searchW = ""
                 continue
+            elif "look for the file" in text2:
+                infoSrch = text2.split()
+                indexW = infoSrch.index("file")
+                sIndex = indexW + 1
+                searchW = infoSrch[sIndex::]
+                print(searchW)
 
+                speak("Searching for the file {}".format(searchW))
+                found_file = find_files(searchW[0])
+                speak('What should i do with it sir?')
+                with sr.Microphone() as source:
+                    r.energy_threshold = 10000
+                    r.adjust_for_ambient_noise(source)
+                    print("listening")
+                    audio = r.listen(source)
+                    try:
+                        textsfile = r.recognize_google(audio)
+                        print(textsfile)
+                    except:
+                        speak("couldnt quite catch that")
+                        continue
+                    if "open" in textsfile:
+                        speak("Opening {}".format(searchW))
+                        os.startfile(listToString(found_file))
+
+                text2 = ""
+                continue
             elif "YouTube" in text2:
                 speak(random.choice(playOnYoutube1))
                 text2 = ""
@@ -248,6 +274,11 @@ def listen():
                 webbrowser.open("https://www.youtube.com/watch?v=NxSDNogkKX0")
                 text2 = ""
                 break
+            elif "chill vibes" in text2:
+                speak(random.choice(playChillMusic))
+                webbrowser.open("https://www.youtube.com/watch?v=zL1gMeoN8bI&t=71s")
+                text2 = ""
+                continue
             elif "download speed" in text2:
                 st = speedtest.Speedtest()
                 speak("Sir the download speed is " + str(int((st.download()/1000)/1000)) + " Megabits per second")

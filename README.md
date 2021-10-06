@@ -22,6 +22,4 @@ Dependancies
   - dlib 19.18
   - psutil
   - pydrive
-  - discord
-  - pandas
   
