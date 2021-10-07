@@ -64,6 +64,7 @@ from weather2 import *
 from uploadToCloud.googleDrive import *
 from powerpointpresenting import intro_pres
 from whatsappAUTO import *
+from discordMessages import *
 
 # from Attendance import name
 
@@ -313,6 +314,10 @@ def listen():
                 continue
             elif "who are you" in text2:
                 speak(random.choice(introduction))
+                text2 = ""
+                continue
+            elif "messages" in text2:
+                retrieve_messages(ninetailsofpogLookingforfriendly)
                 text2 = ""
                 continue
             elif "thanks" in text2:

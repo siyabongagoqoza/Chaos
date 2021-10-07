@@ -1,5 +1,5 @@
+import datetime
 import json
-
 from installMissingModules import *
 import pyttsx3 as p
 
@@ -18,46 +18,31 @@ def speak(text):
 
 
 try:
-    import websocket
+    import requests
 except:
-    speak("I am missing the websocket-client module")
-    install('websocket-client')
+    speak("I am missing the requests module")
+    install('requests')
 
 
-def send_json_request(ws, request):
-    ws.send(json.dumps(request))
-
-
-def receive_json_response(ws):
-    response = ws.recv()
-    if response:
-        return json.loads(response)
-
-
-ws = websocket.WebSocket()
-ws.connect("wss://gateway.discord.gg/?v=6&encording=json")
-heartbeat_interval = receive_json_response(ws)["d"]["heartbeat_interval"]
-
-token = "Njk0NDg2MDE2MDE0NDE3OTcw.YV1slQ.j89l72A5PD8eW6CDrRbwrCJUAfE"
-payload = {
-    "op": 2,
-    "d": {
-        "token": token,
-        "intents": 513,
-        "properties": {
-            "$os": "windows",
-            "$browser": "chrome",
-            "$device": "pc"
-        }
+def retrieve_messages(channelid):
+    headers = {
+        'authorization': 'Njk0NDg2MDE2MDE0NDE3OTcw.YV6YdQ.yx9Ff5CFSe_O6m_TMC6-gTc-4c4'
     }
-}
-send_json_request(ws, payload)
+    r = requests.get(f'https://discord.com/api/v9/channels/{channelid}/messages?limit=5', headers=headers)
+    countMsg = 0
+    jsonn = json.loads(r.text)
+    for value in jsonn:
+        msgDate = value['timestamp'][:10]
+        # print(msgDate)
+        if msgDate == str(datetime.date.today()):
+            print(value['author']['username'] + ": " + value['content'], msgDate, '\n')
+            countMsg += 1
+    if countMsg > 0:
+        speak("You have new messages")
+    else:
+        speak("No new messages")
 
-while True:
-    event = receive_json_response(ws)
-    try:
-        content = event['d']['content']
-        author = event['d']['author']['username']
-        print(f'{author}: {content}')
-    except:
-        pass
+
+ninetailsofpogLookingforfriendly = '863296196948787240'
+# retrieve_messages(ninetailsofpogLookingforfriendly)
+
