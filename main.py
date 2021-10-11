@@ -66,7 +66,7 @@ from powerpointpresenting import intro_pres
 from whatsappAUTO import *
 from discordMessages import *
 
-# from Attendance import name
+from Attendance import name
 
 speak("Importing all preferences from home interface")
 from randomJoke import *
@@ -394,8 +394,9 @@ def listen():
                         except:
                             speak("couldn\'t quite catch that")
                             continue
+                    speak("Sending the message to {}".format(whatppname))
                     sendwhatmsg(whatppname, textMessage)
-                    speak("okay, I am done")
+                    speak("okay, Message sent")
                 else:
                     speak("This person is not on your contact list")
                 text2 = ""
@@ -410,6 +411,7 @@ timeout = time.time() + 1800  # 1800 secs from now : 30 minutes
 timeoutAlarm = time.time() + 0.5
 stats_check = time.time() + 0.5  # check starts every one second
 speak("System is now fully operational")
+speak("Waiting for your command")
 # listens for its name to accept commands
 text = ""
 test = 0
@@ -432,7 +434,7 @@ while True:
             listen()
             text = ""
         elif "clear my reminder" in text:
-            speak("I am clearing your reminder")
+            speak("Clearing your reminder")
             writeNote("")
             text = ""
             continue
