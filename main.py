@@ -25,6 +25,13 @@ except:
     speak("I am missing the speechrecognition module")
     install("speechrecognition")
 try:
+    from ctypes import cast, POINTER
+    from comtypes import CLSCTX_ALL
+    from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+except:
+    speak("I am missing the pycaw module")
+    install("pycaw")
+try:
     import randfacts
 except:
     speak("I am missing the randfacts module")
@@ -52,6 +59,12 @@ try:
 except:
     speak("I am missing the wikipedia module")
     install("wikipedia")
+try:
+    import numpy as np
+except:
+    speak("I am missing the numpy module")
+    install("numpy")
+
 # MODULES ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 from PC_stats import endProcess
@@ -66,7 +79,8 @@ from powerpointpresenting import intro_pres
 from whatsappAUTO import *
 from discordMessages import *
 
-from Attendance import name
+# Identification
+# from Attendance import name
 
 speak("Importing all preferences from home interface")
 from randomJoke import *
@@ -114,26 +128,15 @@ r = sr.Recognizer()
 
 
 # listens for commands
-def listen():
-    text2 = ""
+def listen(text):
+    timeoutListen = time.time() + 30
     while True:
-        print(text2)
         today_date = datetime.datetime.now()
 
         try:
-            with sr.Microphone() as source:
-                r.energy_threshold = 10000
-                r.adjust_for_ambient_noise(source)
-                print("listening")
-                audio = r.listen(source)
-                try:
-                    text2 = r.recognize_google(audio)
-                    print(text2)
-                except:
-                    continue
 
-            if "information" in text2:
-                infoSrch = text2.split()
+            if "information" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("about")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
@@ -143,12 +146,12 @@ def listen():
                 speak("Got it Sir, here's what I know")
 
                 speak(wikipedia.summary(searchW,sentences=3))
-                text2 = ""
+                text = ""
                 searchW = ""
                 break
 
-            elif "search" in text2:
-                infoSrch = text2.split()
+            elif "search" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("search")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
@@ -157,19 +160,20 @@ def listen():
                 speak("Got it")
 
                 link = 'https://www.google.com/search?q={}'.format(searchW)
+                speak("Searching for {}".format(searchW))
                 webbrowser.open(link)
 
-                text2 = ""
+                text = ""
                 searchW = ""
                 continue
-            elif "look for the file" in text2:
-                infoSrch = text2.split()
+            elif "look for the file" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("file")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
                 print(searchW)
 
-                speak("Searching for the file {}".format(searchW))
+                speak("Looking for the file {}".format(searchW))
                 found_file = find_files(searchW[0])
                 speak('What should i do with it sir?')
                 with sr.Microphone() as source:
@@ -187,63 +191,63 @@ def listen():
                         speak("Opening {}".format(searchW))
                         os.startfile(listToString(found_file))
 
-                text2 = ""
+                text = ""
                 continue
-            elif "YouTube" in text2:
+            elif "YouTube" in text:
                 speak(random.choice(playOnYoutube1))
-                text2 = ""
+                text = ""
                 with sr.Microphone() as source:
                     r.energy_threshold = 10000
                     r.adjust_for_ambient_noise(source)
                     print("listening")
                     audio = r.listen(source)
                     try:
-                        text2 = r.recognize_google(audio)
-                        print(text2)
+                        text = r.recognize_google(audio)
+                        print(text)
                     except:
                         speak("couldn\'t quite catch that")
                         continue
-                    speak(random.choice(playOnYoutube2).format(text2))
+                    speak(random.choice(playOnYoutube2).format(text))
                     assist = music()
-                    assist.play(text2)
-                    text2 = ""
+                    assist.play(text)
+                    text = ""
                     break
 
-            elif "news" in text2:
+            elif "news" in text:
                 speak(random.choice(newsRead))
                 arr = news()
                 for i in range(len(arr)):
                     speak(arr[i])
 
-            elif "fact" in text2:
+            elif "fact" in text:
                 speak("Got it, one random fact coming up")
                 x = randfacts.getFact()
                 print(x)
                 speak("did you know that" + x)
-                text2 = ""
+                text = ""
                 continue
 
-            elif "joke" in text2:
+            elif "joke" in text:
                 speak("Sure sir")
                 the_joke = getJoke()
                 for i in range(len(the_joke)):
                     speak(the_joke[i])
-                text2 = ""
+                text = ""
                 continue
-            elif "date today" in text2:
+            elif "date today" in text:
                 speak("today is the " + today_date.strftime("%d") + " of " + today_date.strftime("%B") + " " + today_date.strftime("%Y"))
-                text2 = ""
+                text = ""
                 continue
-            elif "day is it" in text2:
+            elif "day is it" in text:
                 speak("today is" + today_date.strftime("%A"))
-                text2 = ""
+                text = ""
                 continue
-            elif "time" in text2:
+            elif "time" in text:
                 speak("It is " + today_date.strftime("%I") + " " + today_date.strftime("%M") + today_date.strftime("%p"))
-                text2 = ""
+                text = ""
                 continue
-            elif "weather today" in text2:
-                infoSrch = text2.split()
+            elif "weather today" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("in")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
@@ -251,10 +255,10 @@ def listen():
 
                 loop = asyncio.get_event_loop()
                 loop.run_until_complete(getweatherToday(searchW))
-                text2 = ""
+                text = ""
                 continue
-            elif "weather tomorrow" in text2:
-                infoSrch = text2.split()
+            elif "weather tomorrow" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("in")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
@@ -262,36 +266,36 @@ def listen():
 
                 loop = asyncio.get_event_loop()
                 loop.run_until_complete(getweatherTomorrow(searchW))
-                text2 = ""
+                text = ""
                 continue
 
-            elif "sick beats" in text2:
+            elif "sick beats" in text:
                 speak(random.choice(playSickBeats))
                 webbrowser.open("https://www.youtube.com/watch?v=wLoWd2KyUro&list=PLR5Cmjo90BNguiSb2wDShPdKoa-Xiw5x1")
-                text2 = ""
+                text = ""
                 break
-            elif "chill music" in text2:
+            elif "chill music" in text:
                 speak(random.choice(playChillMusic))
                 webbrowser.open("https://www.youtube.com/watch?v=NxSDNogkKX0")
-                text2 = ""
+                text = ""
                 break
-            elif "chill vibes" in text2:
+            elif "chill vibes" in text:
                 speak(random.choice(playChillMusic))
                 webbrowser.open("https://www.youtube.com/watch?v=zL1gMeoN8bI&t=71s")
-                text2 = ""
+                text = ""
                 continue
-            elif "download speed" in text2:
+            elif "download speed" in text:
                 st = speedtest.Speedtest()
                 speak("Sir the download speed is " + str(int((st.download()/1000)/1000)) + " Megabits per second")
-                text2 = ""
+                text = ""
                 continue
-            elif "upload speed" in text2:
+            elif "upload speed" in text:
                 st = speedtest.Speedtest()
                 speak("Sir the upload speed is " + str(int((st.upload()/1000)/1000)) + " Megabits per second")
-                text2 = ""
+                text = ""
                 continue
-            elif "remind me to" in text2:
-                infoSrch = text2.split()
+            elif "remind me to" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("to")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
@@ -299,10 +303,10 @@ def listen():
 
                 writeNote(listToString(searchW))
                 speak("okay, I am done")
-                text2 = ""
+                text = ""
                 continue
-            elif "also I need to" in text2:
-                infoSrch = text2.split()
+            elif "I also need to" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("to")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
@@ -310,23 +314,23 @@ def listen():
 
                 addToNotes(" and to "+listToString(searchW))
                 speak("okay, I am done")
-                text2 = ""
+                text = ""
                 continue
-            elif "who are you" in text2:
+            elif "who are you" in text:
                 speak(random.choice(introduction))
-                text2 = ""
+                text = ""
                 continue
-            elif "messages" in text2:
+            elif "messages" in text:
                 retrieve_messages(ninetailsofpogLookingforfriendly)
-                text2 = ""
+                text = ""
                 continue
-            elif "thanks" in text2:
+            elif "thanks" in text:
                 speak("Happy to help")
-                text2 = ""
+                text = ""
                 break
-            elif "open" in text2:
+            elif "open" in text:
 
-                infoSrch = text2.split()
+                infoSrch = text.split()
                 indexW = infoSrch.index("open")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex]
@@ -337,46 +341,64 @@ def listen():
                         os.startfile(addToDict[searchW])
                         print(i)
                         speak("Opening {}".format(i))
-                text2 = ""
+                text = ""
                 searchW = ""
                 break
-            elif "volume" in text2:
+            elif "volume" in text:
+                infoSrch = text.split()
+                indexW = infoSrch.index("to")
+                sIndex = indexW + 1
+                searchW = infoSrch[sIndex::]
+                # print(searchW)
+                lvl = int(listToString(searchW))
+                print(lvl)
+                devices = AudioUtilities.GetSpeakers()
+                interface = devices.Activate(
+                    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+                volume = cast(interface, POINTER(IAudioEndpointVolume))
+                if lvl == 50:
+                    volume.SetMasterVolumeLevel(-10.0, None)  # 50%
+                if lvl == 100:
+                    volume.SetMasterVolumeLevel(-0.0, None) #max
+                text = ""
+                continue
+            elif "virtual volume" in text:
                 speak(random.choice(volumeSpeak))
                 import volumeHandControl
-                text2 = ""
+                text = ""
                 continue
-            elif "virtual Mouse" in text2:
+            elif "virtual Mouse" in text:
 
                 speak("going to virtual mode")
                 import VirtualMouse
-                text2 = ""
+                text = ""
                 continue
-            elif "upload my save game files" in text2:
+            elif "upload my save game files" in text:
                 speak("I am uploading them now Sir")
                 upload_to_drive()
-                text2 = ""
+                text = ""
                 continue
-            elif "shutdown" in text2:
+            elif "shutdown" in text:
                 speak("Okay Shutting down")
                 os.system('shutdown /s /t 1')
-            elif "restart" in text2:
+            elif "restart" in text:
                 speak("Okay restarting the system")
                 os.system('shutdown /r /t 1')
-            elif "logout" in text2:
+            elif "logout" in text:
                 speak("Okay logging out sir")
                 os.system('shutdown -1')
-            elif "present yourself" in text2:
+            elif "present yourself" in text:
                 speak("Sure sir")
                 intro_pres()
-                text2 = ""
+                text = ""
                 continue
-            elif "tell me" in text2:
+            elif "tell me" in text:
                 if not (readNote() == ""):
                     speak(random.choice(reminder) + " " + readNote())
-                text2 = ""
+                text = ""
                 continue
-            elif "WhatsApp" in text2:
-                infoSrch = text2.split()
+            elif "WhatsApp" in text:
+                infoSrch = text.split()
                 indexW = infoSrch.index("WhatsApp")
                 sIndex = indexW + 1
                 whatppname = infoSrch[sIndex::]
@@ -399,9 +421,27 @@ def listen():
                     speak("okay, Message sent")
                 else:
                     speak("This person is not on your contact list")
-                text2 = ""
+                text = ""
                 continue
-
+            elif "clear my reminder" in text:
+                speak("Clearing your reminder")
+                writeNote("")
+                text = ""
+                continue
+            elif time.time() > timeoutListen:
+                print("breaking from Listen()")
+                timeoutListen = time.time() + 30
+                break
+            with sr.Microphone() as source:
+                r.energy_threshold = 10000
+                r.adjust_for_ambient_noise(source)
+                print("listening")
+                audio = r.listen(source)
+                try:
+                    text = r.recognize_google(audio)
+                    print(text)
+                except:
+                    continue
         except KeyboardInterrupt:
             continue
 
@@ -430,8 +470,8 @@ while True:
         # check time for alarm
         today_date_alarm = datetime.datetime.now()
         if "chaos" in text:
-            speak(random.choice(respondToWake))
-            listen()
+            speak("okay")
+            listen(text)
             text = ""
         elif "clear my reminder" in text:
             speak("Clearing your reminder")
