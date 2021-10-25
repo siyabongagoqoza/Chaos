@@ -251,10 +251,10 @@ def listen(text):
                 indexW = infoSrch.index("in")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
-                print(searchW)
+                Wcity = " ".join(searchW)
 
                 loop = asyncio.get_event_loop()
-                loop.run_until_complete(getweatherToday(listToString(searchW)))
+                loop.run_until_complete(getweatherToday(Wcity))
                 text = ""
                 continue
             elif "weather tomorrow" in text:
@@ -262,10 +262,10 @@ def listen(text):
                 indexW = infoSrch.index("in")
                 sIndex = indexW + 1
                 searchW = infoSrch[sIndex::]
-                print(searchW)
+                Wcity = " ".join(searchW)
 
                 loop = asyncio.get_event_loop()
-                loop.run_until_complete(getweatherTomorrow(listToString(searchW)))
+                loop.run_until_complete(getweatherTomorrow(Wcity))
                 text = ""
                 continue
 
