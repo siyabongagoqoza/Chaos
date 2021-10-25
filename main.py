@@ -254,7 +254,7 @@ def listen(text):
                 print(searchW)
 
                 loop = asyncio.get_event_loop()
-                loop.run_until_complete(getweatherToday(searchW))
+                loop.run_until_complete(getweatherToday(listToString(searchW)))
                 text = ""
                 continue
             elif "weather tomorrow" in text:
@@ -265,7 +265,7 @@ def listen(text):
                 print(searchW)
 
                 loop = asyncio.get_event_loop()
-                loop.run_until_complete(getweatherTomorrow(searchW))
+                loop.run_until_complete(getweatherTomorrow(listToString(searchW)))
                 text = ""
                 continue
 

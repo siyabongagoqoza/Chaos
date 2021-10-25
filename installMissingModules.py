@@ -17,7 +17,7 @@ def speak(text):
 
 
 def install(package):
-    speak("Installing installing the module, you may need to restart my process after the installation")
+    speak("Install the {} module, you may need to restart my process after the installation".format(package))
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 
