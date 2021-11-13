@@ -80,7 +80,7 @@ from whatsappAUTO import *
 from discordMessages import *
 
 # Identification
-# from Attendance import name
+from Attendance import name
 
 speak("Importing all preferences from home interface")
 from randomJoke import *
