@@ -80,7 +80,7 @@ from whatsappAUTO import *
 from discordMessages import *
 
 # Identification
-from Attendance import name
+# from Attendance import name
 
 speak("Importing all preferences from home interface")
 from randomJoke import *
@@ -333,14 +333,19 @@ def listen(text):
                 infoSrch = text.split()
                 indexW = infoSrch.index("open")
                 sIndex = indexW + 1
-                searchW = infoSrch[sIndex]
+                searchW = infoSrch[sIndex::]
                 print(searchW)
+                opener = " ".join(searchW)
                 scanFiles()
                 for i in addToDict:
-                    if searchW in i:
-                        os.startfile(addToDict[searchW])
-                        print(i)
-                        speak("Opening {}".format(i))
+                    try:
+                        if opener in i:
+                            os.startfile(addToDict[opener])
+                            print(i)
+                            speak("Opening {}".format(i))
+                    except:
+                        speak("I cannot find the file you are looking for")
+
                 text = ""
                 searchW = ""
                 break
@@ -392,7 +397,7 @@ def listen(text):
                 intro_pres()
                 text = ""
                 continue
-            elif "tell me" in text:
+            elif "suppose to do" in text:
                 if not (readNote() == ""):
                     speak(random.choice(reminder) + " " + readNote())
                 text = ""
