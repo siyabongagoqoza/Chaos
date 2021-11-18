@@ -80,7 +80,7 @@ from whatsappAUTO import *
 from discordMessages import *
 
 # Identification
-# from Attendance import name
+from Attendance import name
 
 speak("Importing all preferences from home interface")
 from randomJoke import *
@@ -397,9 +397,9 @@ def listen(text):
                 intro_pres()
                 text = ""
                 continue
-            elif "suppose to do" in text:
+            elif "supposed to do" in text:
                 if not (readNote() == ""):
-                    speak(random.choice(reminder) + " " + readNote())
+                    speak("You have to " + readNote())
                 text = ""
                 continue
             elif "WhatsApp" in text:
