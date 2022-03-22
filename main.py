@@ -191,6 +191,10 @@ def listen(text):
                         speak("Opening {}".format(searchW))
                         os.startfile(listToString(found_file))
 
+                    else:
+                        speak("anything else you would like me to do Sir?")
+
+
                 text = ""
                 continue
             elif "YouTube" in text:
@@ -434,8 +438,13 @@ def listen(text):
                 text = ""
                 continue
             elif time.time() > timeoutListen:
+                speak("I will be on standby")
                 print("breaking from Listen()")
                 timeoutListen = time.time() + 30
+                break
+            elif "standby" in text:
+                speak("okay Sir")
+                text = ""
                 break
             with sr.Microphone() as source:
                 r.energy_threshold = 10000
@@ -493,6 +502,9 @@ while True:
             text = ""
         elif "who are you" in text:
             speak(random.choice(introduction))
+            text = ""
+        elif "what can you do" in text:
+            speak(random.choice(feature))
             text = ""
         # reminder
         elif time.time() > timeout:
