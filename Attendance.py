@@ -33,7 +33,7 @@ import os
 
 userAccount = getpass.getuser()
 
-path = "C:\\Users\\"+userAccount+"\\PycharmProjects\\CHAOS\\imagesAttendance"
+path = "C:\\Users\\"+userAccount+"\\CHAOS\\imagesAttendance"
 images = []
 classNames = []
 myList = os.listdir(path)

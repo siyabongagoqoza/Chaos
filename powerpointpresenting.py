@@ -26,7 +26,7 @@ print(userAccount)
 
 
 def intro_pres():
-    os.startfile('C:\\Users\\'+userAccount+'\\PycharmProjects\\Chaos\\pptx\\CHAOS.pptx')
+    os.startfile('C:\\Users\\'+userAccount+'\\Chaos\\pptx\\CHAOS.pptx')
     time.sleep(1)
     app = win32com.client.GetActiveObject("PowerPoint.Application")
     pptpres = app.ActivePresentation

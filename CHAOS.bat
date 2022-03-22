@@ -1,4 +1,4 @@
 @echo off
-cd C:\Users\Cash\PycharmProjects\Chaos
+cd C:\Users\Cash\Chaos
 cls
 main.py

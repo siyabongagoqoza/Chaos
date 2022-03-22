@@ -6,7 +6,7 @@ from selenium import webdriver
 class google_sign_in():
     def __init__(self):
         userAccount = getpass.getuser()
-        self.driver = webdriver.Chrome(executable_path='C:\\Users\\'+userAccount+'\\PycharmProjects\\CHAOS\\chromedriver\\chromedriver.exe')
+        self.driver = webdriver.Chrome(executable_path='C:\\Users\\'+userAccount+'\\CHAOS\\chromedriver\\chromedriver.exe')
 
     def sign_in(self):
         self.driver.get(url="https://stackoverflow.com/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2f")

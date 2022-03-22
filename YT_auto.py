@@ -26,7 +26,7 @@ class music():
     def __init__(self):
         userAccount = getpass.getuser()
         print(userAccount)
-        self.driver = webdriver.Chrome(executable_path='C:\\Users\\'+ userAccount +'\\PycharmProjects\\Chaos\\chromedriver\\chromedriver.exe')
+        self.driver = webdriver.Chrome(executable_path='C:\\Users\\'+ userAccount +'\\Chaos\\chromedriver\\chromedriver.exe')
 
     def play(self, query):
         self.query = query

@@ -92,21 +92,21 @@ print(userAccount)
 
 def writeNote(words):
 
-    fwrite = open("C:\\Users\\"+userAccount+"\\PycharmProjects\\Chaos\\notes.txt", "w")
+    fwrite = open("C:\\Users\\"+userAccount+"\\Chaos\\notes.txt", "w")
     fwrite.write(words)
     fwrite.close()
 
 
 def addToNotes(words):
 
-    fwrite = open("C:\\Users\\"+userAccount+"\\PycharmProjects\\Chaos\\notes.txt", "a")
+    fwrite = open("C:\\Users\\"+userAccount+"\\Chaos\\notes.txt", "a")
     fwrite.write(words)
     fwrite.close()
 
 
 def readNote():
 
-    fread = open("C:\\Users\\"+userAccount+"\\PycharmProjects\\Chaos\\notes.txt", "r")
+    fread = open("C:\\Users\\"+userAccount+"\\Chaos\\notes.txt", "r")
     contents = fread.read()
     return contents
 
