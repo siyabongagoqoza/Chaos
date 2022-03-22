@@ -36,14 +36,14 @@ from shutil import make_archive
 userAccount = getpass.getuser()
 print(userAccount)
 
-client_json_path = 'C:\\Users\\'+userAccount+'\\PycharmProjects\\Chaos\\uploadToCloud\\client_secrets.json'
+client_json_path = 'C:\\Users\\'+userAccount+'\\Chaos\\uploadToCloud\\client_secrets.json'
 try:
     GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = client_json_path
 except:
     if userAccount == "Cash":
-        os.startfile('C:\\Users\\'+userAccount+'\\PycharmProjects\\Chaos\\CHAOS.bat')
+        os.startfile('C:\\Users\\'+userAccount+'\\Chaos\\CHAOS.bat')
     if userAccount == "Siyabonga Goqoza":
-        os.startfile('C:\\Users\\'+userAccount+'\\PycharmProjects\\Chaos\\CHAOS-Work.bat')
+        os.startfile('C:\\Users\\'+userAccount+'\\Chaos\\CHAOS-Work.bat')
 
 gauth = GoogleAuth()
 drive = GoogleDrive(gauth)
