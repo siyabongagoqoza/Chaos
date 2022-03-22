@@ -56,5 +56,5 @@ presentation2 = [" You can ask me about the weather"
                  " I am guessing my monotone voice will bore you to death"
                  " so I'll let Siyabonga take over,"]
 
-
+feature = ["Here's a list of the things I can assist you with"]
 

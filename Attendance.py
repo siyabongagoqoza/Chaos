@@ -58,7 +58,7 @@ encodeListKnown = findEncodings(images)
 # print(len(encodeListKnown))
 speak("Identify yourself")
 
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 
 # id timer verification
 timeoutID = time.time() + 5  # 5 seconds

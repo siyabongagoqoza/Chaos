@@ -487,6 +487,9 @@ while True:
             speak("okay")
             listen(text)
             text = ""
+        elif "update" in text:
+            speak("updating")
+            text = ""
         elif "clear my reminder" in text:
             speak("Clearing your reminder")
             writeNote("")
@@ -505,6 +508,7 @@ while True:
             text = ""
         elif "what can you do" in text:
             speak(random.choice(feature))
+            os.startfile("C:\\Users\\"+userAccount+"\\CHAOS\\features.txt")
             text = ""
         # reminder
         elif time.time() > timeout:
