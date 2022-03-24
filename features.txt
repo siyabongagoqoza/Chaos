@@ -24,6 +24,7 @@ start with "chaos" if im on standby
 "virtual volume"
 "virtual mouse"
 "upload my save game files"
+"upload your files"
 "shutdown" (shut pc)
 "logout"
 "present yourself"

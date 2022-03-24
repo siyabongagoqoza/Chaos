@@ -26,8 +26,8 @@ def git_push():
 def uploadToGit():
     try:
         git_push()
-        print("Upload was successful")
+        speak("Upload was successful")
     except:
-        print("An error occured, gonna try again")
+        speak("An error occured, gonna try again")
         git_push()
 
