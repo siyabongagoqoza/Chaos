@@ -1,9 +1,12 @@
 import getpass
+from installMissingModules import *
+try:
+    from git import Repo
+except:
+    install("gitpython")
+    speak('I am missing the gitpython module')
 
 userAccount = getpass.getuser()
-
-from git import Repo
-
 path = "C:\\Users\\"+userAccount+"\\Chaos\\.git"
 PATH_OF_GIT_REPO = path  # make sure .git folder is properly configured
 COMMIT_MESSAGE = 'Chaotic update'
@@ -20,7 +23,7 @@ def git_push():
         # print('Some error occured while pushing the code')
 
 
-def upload():
+def uploadToGit():
     try:
         git_push()
         print("Upload was successful")
@@ -28,4 +31,3 @@ def upload():
         print("An error occured, gonna try again")
         git_push()
 
-upload()

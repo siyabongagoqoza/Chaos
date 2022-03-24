@@ -15,7 +15,7 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
-
+subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
 def install(package):
     speak("Installing the {} module, you may need to restart my process after the installation".format(package))
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])

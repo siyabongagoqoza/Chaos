@@ -1,8 +1,10 @@
 # MODULES -----------------------------------------
 
 from installMissingModules import *
-import pyttsx3 as p
-
+try:
+    import pyttsx3 as p
+except:
+    install("pyttsx3")
 # registering text to speech module FIRST
 
 engine = p.init('sapi5')
@@ -78,6 +80,7 @@ from uploadToCloud.googleDrive import *
 from powerpointpresenting import intro_pres
 from whatsappAUTO import *
 from discordMessages import *
+from uploadToGit import *
 
 # Identification
 from Attendance import name
@@ -432,6 +435,12 @@ def listen(text):
                     speak("This person is not on your contact list")
                 text = ""
                 continue
+
+            elif "upload your files" in text:
+                speak("uploading all my files to GitHub")
+                uploadToGit()
+                text = ""
+                continue
             elif "clear my reminder" in text:
                 speak("Clearing your reminder")
                 writeNote("")
@@ -486,9 +495,6 @@ while True:
         if "chaos" in text:
             speak("okay")
             listen(text)
-            text = ""
-        elif "update" in text:
-            speak("updating")
             text = ""
         elif "clear my reminder" in text:
             speak("Clearing your reminder")
