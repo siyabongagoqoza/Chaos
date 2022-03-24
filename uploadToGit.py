@@ -15,12 +15,13 @@ def git_push():
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='origin')
         origin.push()
-        print("Upload was successful")
+
     # except:
         # print('Some error occured while pushing the code')
 
 try:
     git_push()
+    print("Upload was successful")
 except:
     print("An error occured, gonna try again")
     git_push()
