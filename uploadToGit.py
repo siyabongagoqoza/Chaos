@@ -19,9 +19,13 @@ def git_push():
     # except:
         # print('Some error occured while pushing the code')
 
-try:
-    git_push()
-    print("Upload was successful")
-except:
-    print("An error occured, gonna try again")
-    git_push()
+
+def upload():
+    try:
+        git_push()
+        print("Upload was successful")
+    except:
+        print("An error occured, gonna try again")
+        git_push()
+
+upload()
