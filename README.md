@@ -23,4 +23,5 @@ Dependancies
   - psutil
   - pydrive
   - setuptools
+  - pycaw
   
